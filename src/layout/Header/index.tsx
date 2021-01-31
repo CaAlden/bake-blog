@@ -15,6 +15,10 @@ const getHeaderClass = (color: string) => css({
   background: color,
   color: Colors.White,
   padding: '15px',
+  position: 'sticky',
+  zIndex: 100,
+  boxShadow: '0px 1px 4px rgba(0,0,0,0.4)',
+  top: 0,
 });
 
 const titleClass = css({

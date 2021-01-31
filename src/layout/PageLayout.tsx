@@ -8,8 +8,8 @@ interface IProps {
 }
 
 const fillPageClassName = css({
-  width: '100vw',
-  height: '100vh',
+  minWidth: '100vw',
+  minHeight: '100vh',
   display: 'flex',
   flexGrow: 1,
   background: Colors.White,

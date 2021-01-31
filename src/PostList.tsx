@@ -25,7 +25,7 @@ const PostList: React.FC<IProps> = ({ routes }) => {
               <span>No Results</span>
             ) : (
               routes.map(([header]) => (
-                <PostCard postLink={header.articleLink} {...header} />
+                <PostCard key={header.articleLink.name} postLink={header.articleLink} {...header} />
               ))
             )}
           </ListLayout>

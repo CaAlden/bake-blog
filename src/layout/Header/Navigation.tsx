@@ -28,8 +28,8 @@ const headerLinkClass = css({
   ":visited": {
     color: Colors.White,
   },
-  ":active": {
-    color: Colors.Secondary,
+  ':hover': {
+    textDecoration: 'underline',
   },
 });
 const activeHeaderItemClass = css({
@@ -43,7 +43,7 @@ const Navigation = ({ items }: IProps) => {
     <nav className={navClass}>
       {items.map(({ label, to }) =>
         to === route.path ? (
-          <span className={activeHeaderItemClass}>{label}</span>
+          <span key={to} className={activeHeaderItemClass}>{label}</span>
         ) : (
           <Link className={headerLinkClass} to={to} key={to}>
             {label}

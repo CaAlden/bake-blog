@@ -34,24 +34,30 @@ export interface Ingredient {
 }
 
 type Markdown = string;
-export interface Recipe {
+export interface IRecipeDetail {
   ingredients: Ingredient[];
   steps: {
     [U in Units]: Markdown;
   };
 }
-type SelectedParameterId = string;
+export interface Recipe<P extends Parameter[]> {
+  difficulty: Difficulty;
+  parameters: P;
+  description: string;
+  link: NamedLink;
+  details: {
+    [K in P[number]['name']]: IRecipeDetail
+  };
+}
 export interface PostDataHeader {
   title: string;
   description: string;
+  author?: string;
   publishDate: Date;
   timeEstimate: number;
   articleLink: NamedLink;
-  recipeLinks: NamedLink[];
-  difficulty: Difficulty;
 }
 export interface PostData extends PostDataHeader {
-  parameters: Parameter[];
-  recipes: Map<SelectedParameterId, Recipe>;
+  recipes: Map<string, Recipe<any>>;
   blog: { [U in Units]: Markdown };
 };

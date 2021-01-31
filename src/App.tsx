@@ -8,21 +8,23 @@ import {
 } from 'react-router-dom';
 import ListLayout from './layout/ListLayout';
 import PageLayout from './layout/PageLayout';
-import { NamedLink, PostDataHeader } from '../types';
+import { NamedLink, PostDataHeader, PostData, Recipe as RecipeData } from '../types';
 import FirstPost from './posts/first-post';
 import Homepage from './Homepage';
 import PostList from './PostList';
 import RecipeList from './RecipeList';
-import { header as firstPostHeader } from './posts/first-post/header-data';
+import { data as firstPostData } from './posts/first-post/data';
 import { Breakpoint, BreakpointProvider } from './context';
 import { getRecipes } from './utils/posts';
+import connectData, { connectRecipe } from './utils/connectData';
+import Recipe from './Recipe';
 
-const RECIPES: Array<[NamedLink, PostDataHeader, React.ComponentType]> = [
-  ...getRecipes(firstPostHeader).map((d): [NamedLink, PostDataHeader, React.ComponentType] => [...d, () => null]),
+const RECIPES: Array<[RecipeData<any>, React.ComponentType]> = [
+  ...getRecipes(firstPostData).map((recipe): [RecipeData<any>, React.ComponentType] => [recipe, connectRecipe(recipe, Recipe) ]),
 ];
 
 const POSTS: Array<[PostDataHeader, React.ComponentType]> = [
-  [firstPostHeader, FirstPost],
+  [firstPostData, FirstPost],
 ];
 
 export default function App() {
@@ -37,7 +39,7 @@ export default function App() {
             <PostList routes={POSTS} />
           </Route>
           <Route exact path="/">
-            <Homepage posts={[firstPostHeader]} />
+            <Homepage posts={[firstPostData]} />
           </Route>
           <Route path="*">
             TODO: 404

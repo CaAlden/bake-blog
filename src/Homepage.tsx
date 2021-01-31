@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { css } from '@emotion/css';
 import PageLayout from './layout/PageLayout';
-import { NamedLink, PostDataHeader } from '../types';
+import { NamedLink, PostData } from '../types';
 import { getRecipes } from './utils/posts';
 import { RecipeCard, PostCard, CardPost } from './layout/Cards';
 
@@ -29,6 +29,15 @@ const titleClassName = css({
   fontSize: '5em',
   fontStyle: 'italic',
   zIndex: 2,
+  WebkitTextStroke: '1px black',
+  color: '#fff',
+  textShadow: `
+      3px 3px 0 #000,
+    -1px -1px 0 #000,
+     1px -1px 0 #000,
+     -1px 1px 0 #000,
+      1px 1px 0 #000;
+  `,
 });
 const HeroTitle: React.FC = () => {
   return (
@@ -51,22 +60,22 @@ const HeroTitle: React.FC = () => {
 };
 
 interface IProps {
-  posts: PostDataHeader[];
+  posts: PostData[];
 }
 
-const getPosts = (posts: PostDataHeader[]): CardPost[] => {
+const getPosts = (posts: PostData[]): CardPost[] => {
   const result: CardPost[] = [];
   posts.forEach(p => {
     result.push({
       type: 'post',
       props: { ...p, postLink: p.articleLink },
     });
-    const recipes = getRecipes(p).forEach(([link, header]) => {
+    const recipes = getRecipes(p).forEach((r) => {
       result.push({
         type: 'recipe',
         props: {
-          recipeLink: link,
-          ...header,
+          recipeLink: r.link,
+          ...r,
         },
       });
     });
@@ -95,7 +104,7 @@ const PostCards: React.FC<IProps> = ({ posts }) => {
 const pageLayoutClass = css({
   display: 'grid',
   gap: '15px',
-  gridAutoRows: '1fr',
+  gridTemplateRows: 'minmax(400px, 40vh) 1fr 10px',
   gridTemplateColumns: '1fr',
 });
 

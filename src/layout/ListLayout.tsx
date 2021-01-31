@@ -13,6 +13,7 @@ const childClass = css({
 const container = css({
   display: 'flex',
   flexGrow: 1,
+  flexWrap: 'wrap',
   gap: '30px',
   alignItems: 'center',
   justifyContent: 'center',

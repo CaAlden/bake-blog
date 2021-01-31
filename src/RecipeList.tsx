@@ -1,20 +1,20 @@
 import * as React from "react";
 import { Link, Route, Switch, useRouteMatch } from "react-router-dom";
-import { NamedLink, PostDataHeader } from "../types";
+import { Recipe } from "../types";
 import { RecipeCard } from "./layout/Cards";
 import ListLayout from "./layout/ListLayout";
 import PageLayout from "./layout/PageLayout";
 
 interface IProps {
-  routes: Array<[NamedLink, PostDataHeader, React.ComponentType]>;
+  routes: Array<[Recipe<any>, React.ComponentType]>;
 }
 
 const RecipeList: React.FC<IProps> = ({ routes }) => {
   const match = useRouteMatch();
   return (
     <Switch>
-      {routes.map(([link, header, Component]) => (
-        <Route path={link.url} key={link.url}>
+      {routes.map(([recipe, Component]) => (
+        <Route path={recipe.link.url} key={recipe.link.url}>
           <Component />
         </Route>
       ))}
@@ -24,8 +24,8 @@ const RecipeList: React.FC<IProps> = ({ routes }) => {
             {routes.length === 0 ? (
               <span>No Results</span>
             ) : (
-              routes.map(([link, header]) => (
-                <RecipeCard recipeLink={link} {...header} />
+              routes.map(([recipe]) => (
+                <RecipeCard key={recipe.link.name} {...recipe} recipeLink={recipe.link} />
               ))
             )}
           </ListLayout>
