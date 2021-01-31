@@ -1,63 +1,196 @@
 import { css } from "@emotion/css";
 import * as React from "react";
-import { PostData, Recipe as RecipeData, Parameter, IRecipeDetail } from "../types";
+import {
+  PostData,
+  Recipe as RecipeData,
+  Parameter,
+  IRecipeDetail,
+  Ingredient,
+} from "../types";
 import { useUnits } from "./context";
 import HeroImage from "./layout/HeroImage";
 import PageLayout from "./layout/PageLayout";
 import Markdown from "./utils/Markdown";
-interface IProps<P extends Parameter[]> {
-  data: RecipeData<P>;
+
+const sliderContainerClass = css({
+  flexGrow: 1,
+  flexDirection: "column",
+  display: "flex",
+});
+const optionsClass = css({
+  display: "flex",
+  justifyContent: "space-between",
+  flexGrow: 1,
+});
+const labelClass = css({
+  cursor: "pointer",
+});
+const sliderClass = css({
+  flexGrow: 1,
+  margin: "0 15px",
+  background: "transparent" /* Otherwise white in Chrome */,
+  outline: "none",
+});
+const ParameterRange: React.FC<{
+  parameter: Parameter;
+  current: string;
+  updateSetting: (setting: string) => void;
+}> = ({ parameter, current, updateSetting }) => {
+  return parameter.settings.length > 1 ? (
+    <div className={sliderContainerClass}>
+      <div className={optionsClass}>
+        {parameter.settings.map((s) => (
+          <span
+            className={labelClass}
+            onClick={() => updateSetting(s)}
+            key={s}
+            style={{ fontWeight: s === current ? "bold" : "normal" }}
+          >
+            {s}
+          </span>
+        ))}
+      </div>
+      <input
+        className={sliderClass}
+        type="range"
+        min="0"
+        max={parameter.settings.length - 1}
+        onChange={(e) => updateSetting(parameter.settings[e.target.value])}
+        value={parameter.settings.indexOf(current)}
+      />
+    </div>
+  ) : null;
+};
+
+const listClass = css({
+  display: "flex",
+  flexDirection: "column",
+  flexGrow: 1,
+  minWidth: "320px",
+  maxWidth: "500px",
+  padding: "10px",
+  background: "#fff",
+});
+const Parameters: React.FC<{
+  parameters: Parameter[];
+  settings: string[];
+  updateSettings: (settings: string[]) => void;
+}> = ({ parameters, settings, updateSettings }) => {
+  if (parameters.length < 1) {
+    return null;
+  }
+  return (
+    <section className={listClass}>
+      <h3>Recipe Preferences</h3>
+      {parameters.map((p, i) => (
+        <ParameterRange
+          parameter={p}
+          current={settings[i]}
+          updateSetting={(setting) =>
+            updateSettings([
+              ...settings.slice(0, i),
+              setting,
+              ...settings.slice(i + 1),
+            ])
+          }
+          key={p.name}
+        />
+      ))}
+    </section>
+  );
+};
+
+const tableClass = css({
+  minWidth: "320px",
+  maxWidth: "500px",
+  flexGrow: 1,
+  borderCollapse: "collapse",
+  border: "1px solid black",
+  background: "white",
+});
+const tableHeaderCellClass = css({
+  padding: "10px",
+  fontWeight: "bold",
+  color: "white",
+  background: "black",
+});
+const tableCellClass = css({
+  padding: "10px",
+  border: "1px solid black",
+});
+const tableRowClass = css({});
+const Ingredients: React.FC<{ ingredients: Ingredient[] }> = ({
+  ingredients,
+}) => {
+  const units = useUnits();
+  return (
+    <table className={tableClass}>
+      <tbody>
+        <tr>
+          <td className={tableHeaderCellClass}>Ingredient</td>
+          <td className={tableHeaderCellClass}>Amount</td>
+        </tr>
+        {ingredients.map((ingredient) => (
+          <tr className={tableRowClass} key={ingredient.name}>
+            <td className={tableCellClass}>{ingredient.name}</td>
+            <td className={tableCellClass}>{ingredient.amount[units]}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+};
+
+interface IProps {
+  data: RecipeData;
 }
 
 const recipeLayoutClass = css({
-  display: 'grid',
-  gridTemplateRows: 'minmax(400px, 60vh) 30px',
-  gap: '10px',
-  gridAutoRows: '1fr',
+  display: "grid",
+  gridTemplateRows: "minmax(400px, 60vh)",
+  gap: "10px",
+  gridAutoRows: "1fr",
   flexGrow: 1,
 });
-const frontMatterClass = css({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  flexWrap: 'wrap',
-  gap: '10px',
-  padding: '0 10px',
-  color: 'gray',
+const recipeMainClass = css({
+  position: "relative",
+  display: "flex",
+  flexWrap: "wrap-reverse",
+  flexGrow: 1,
 });
-
+const recipeSidebarClass = css({
+  position: "sticky",
+  top: 0,
+  display: "flex",
+  flexDirection: "column",
+  flexGrow: 1,
+  flexBasis: "320px",
+});
 const articleClass = css({
-  padding: '0 25%',
-  disply: 'flex',
+  flexGrow: 3,
 });
-export default function Recipe<P extends Parameter[]>({ data }: IProps<P>) {
+export default function Recipe({ data }: IProps) {
   const units = useUnits();
-  const [param, setParams] = React.useState<P[number]>(data.parameters[0]);
-  const selectedRecipe: IRecipeDetail = data.details[param.name];
+  const [settings, updateSettings] = React.useState<string[]>(
+    data.parameters.map((p) => p.settings[0] ?? "")
+  );
+  const selectedRecipe: IRecipeDetail = data.details.get(settings.join("-"));
   return (
     <PageLayout title={data.link.name}>
-      <article>
+      <article className={recipeLayoutClass}>
         <HeroImage image={data.link.image} text={data.link.name} />
-        <div>
-        <section>
-          <table>
-            <tbody>
-              <tr>
-                <td>Ingredient</td>
-                <td>Amount</td>
-              </tr>
-              {selectedRecipe.ingredients.map((ingredient) => (
-                <tr key={ingredient.name}>
-                  <td>{ingredient.name}</td>
-                  <td>{ingredient.amount[units]}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </section>
-        <section>
-          <Markdown markdown={selectedRecipe.steps[units]} />
-        </section>
+        <div className={recipeMainClass}>
+          <section className={articleClass}>
+            <Markdown markdown={selectedRecipe.steps[units]} />
+          </section>
+          <div className={recipeSidebarClass}>
+            <Parameters
+              parameters={data.parameters}
+              settings={settings}
+              updateSettings={updateSettings}
+            />
+            <Ingredients ingredients={selectedRecipe.ingredients} />
+          </div>
         </div>
       </article>
     </PageLayout>

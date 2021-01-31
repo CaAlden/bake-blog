@@ -347,3 +347,7 @@ template {
 [hidden] {
   display: none;
 }
+
+h1,h2,h3,div,section,body,html,span,table,tbody,tr,td {
+  box-sizing: border-box;
+}

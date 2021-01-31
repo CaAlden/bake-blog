@@ -23,7 +23,7 @@ const getHeroImageClass = (image: Image) => css({
 });
 
 const textClass = css({
-  fontSize: '5rem',
+  fontSize: 'calc(3rem + 2vw)',
   textAlign: 'center',
   fontStyle: 'italic',
   margin: 0,
