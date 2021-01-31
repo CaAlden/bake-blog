@@ -30,13 +30,13 @@ export type CardPost = IPostCardPost | IRecipeCardPost;
 const imageClass = css({
   background: 'white',
   position: 'absolute',
-  right: 'calc(50% - 120px)',
+  right: 'calc(50% - 116px)',
   top: '-50px',
   height: '225px',
   width: '225px',
   borderRadius: '50%',
   padding: '5px',
-  border: '4px solid black',
+  border: '2px solid rgba(0,0,0, 0.1)',
 });
 const cardTopContainerClass = css({
   position: 'relative',
@@ -52,17 +52,18 @@ const CardTop: React.FC<{ image: Image }> = ({ image }) => {
 const cardContainerClass = css({
   marginTop: '50px',
   width: '300px',
-  height: '375px',
-  border: '1px solid black',
+  height: '350px',
   display: 'grid',
-  gridTemplateRows: '60% 40%',
+  gridTemplateRows: '225px 125px',
   gridTemplateColumns: '1fr',
   boxShadow: '2px 2px 2px rgba(0, 0, 0, 0.2)',
+  background: 'white',
 });
 const cardContentSectionClass = css({
-  borderTop: '1px solid black',
   padding: '5px',
+  display: 'flex',
 });
+
 const CardLayout: React.FC<{
   color: string;
   top: React.ReactNode;
@@ -84,6 +85,47 @@ const CardLayout: React.FC<{
   );
 };
 
+const contentTitleClass = css({
+  margin: 0,
+  fontSize: '1.1em',
+});
+const linkClass = css({
+  display: 'grid',
+  gridTemplateRows: '1.5fr 1.5fr 1fr',
+  flexGrow: 1,
+  gap: '5px',
+  color: 'inherit',
+  textDecoration: 'none',
+  ':visited': {
+    color: 'inherit',
+  },
+  ':hover': {
+    cursor: 'pointer',
+  },
+});
+const titleSectionClass = css({
+  color: Colors.Secondary,
+  display: 'flex',
+  gap: '5px',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+});
+const dateClass = css({
+  color: 'gray',
+  fontSize: '0.8em',
+});
+const paragraphClass = css({
+  margin: 0,
+  fontSize: '0.9em',
+  display: 'flex',
+  alignItems: 'center',
+});
+const footerClass = css({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '5px',
+});
+
 const RecipeContent: React.FC<IRecipeCardProps> = ({
   description,
   recipeLink,
@@ -91,19 +133,17 @@ const RecipeContent: React.FC<IRecipeCardProps> = ({
   publishDate,
 }) => {
   return (
-    <div>
-      <div>
-        <Link to={recipeLink.url}>
-          <h3>{recipeLink.name}</h3>
-        </Link>
-        <span>{publishDate.toLocaleDateString()}</span>
+    <Link className={linkClass} to={recipeLink.url}>
+      <div className={titleSectionClass}>
+        <h3 className={contentTitleClass}>{recipeLink.name}</h3>
+        <span className={dateClass}>{publishDate.toLocaleDateString()}</span>
       </div>
-      <p>{description}</p>
-      <div>
+      <p className={paragraphClass}>{description}</p>
+      <div className={footerClass}>
         <label>Difficulty: </label>
         <span>{difficulty}</span>
       </div>
-    </div>
+    </Link>
   );
 };
 
@@ -122,19 +162,17 @@ const PostContent: React.FC<IPostCardProps> = ({
   publishDate,
 }) => {
   return (
-    <div>
-      <div>
-        <Link to={postLink.url}>
-          <h3>{postLink.name}</h3>
-        </Link>
-        <span>{publishDate.toLocaleDateString()}</span>
+    <Link className={linkClass} to={postLink.url}>
+      <div className={titleSectionClass}>
+        <h3 className={contentTitleClass}>{postLink.name}</h3>
+        <span className={dateClass}>{publishDate.toLocaleDateString()}</span>
       </div>
-      <p>{description}</p>
-      <div>
+      <p className={paragraphClass}>{description}</p>
+      <div className={footerClass}>
         <label>Reading Time: </label>
         <span>{timeEstimate} Minutes</span>
       </div>
-    </div>
+    </Link>
   );
 };
 

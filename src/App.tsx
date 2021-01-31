@@ -11,47 +11,19 @@ import PageLayout from './layout/PageLayout';
 import { NamedLink, PostDataHeader } from '../types';
 import FirstPost from './posts/first-post';
 import Homepage from './Homepage';
+import PostList from './PostList';
+import RecipeList from './RecipeList';
 import { header as firstPostHeader } from './posts/first-post/header-data';
 import { Breakpoint, BreakpointProvider } from './context';
+import { getRecipes } from './utils/posts';
 
-type Routes = Array<[NamedLink, React.ComponentType]>;
-const RECIPES: Routes = [
+const RECIPES: Array<[NamedLink, PostDataHeader, React.ComponentType]> = [
+  ...getRecipes(firstPostHeader).map((d): [NamedLink, PostDataHeader, React.ComponentType] => [...d, () => null]),
 ];
 
-const POSTS: Routes = [
-  [firstPostHeader.articleLink, FirstPost],
+const POSTS: Array<[PostDataHeader, React.ComponentType]> = [
+  [firstPostHeader, FirstPost],
 ];
-
-const Directory: React.FC<{routes: Routes; title: string }> = ({ routes, title, children }) => {
-  const match = useRouteMatch();
-  return (
-    <Switch>
-      {routes.map(([link, Component]) =>
-        <Route path={link.url} key={link.url}>
-          <Component />
-        </Route>
-      )}
-      <Route exact path={match.path}>
-        <PageLayout title={title}>
-          {routes.length === 0 ? (
-            <span>No Results</span>
-          ) : (
-            <ListLayout>
-              {routes.map(([link]) =>
-                <Link key={link.url} to={link.url}>
-                  {link.name}
-                </Link>
-              )}
-            </ListLayout>
-          )}
-        </PageLayout>
-      </Route>
-      <Route path="*">
-        404
-      </Route>
-    </Switch>
-  );
-}
 
 export default function App() {
   return (
@@ -59,10 +31,10 @@ export default function App() {
       <Router>
         <Switch>
           <Route path="/recipes">
-            <Directory routes={RECIPES} title="Recipes" />
+            <RecipeList routes={RECIPES} />
           </Route>
           <Route path="/posts">
-            <Directory routes={POSTS} title="Posts" />
+            <PostList routes={POSTS} />
           </Route>
           <Route exact path="/">
             <Homepage posts={[firstPostHeader]} />

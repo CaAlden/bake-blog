@@ -2,7 +2,7 @@ import * as React from 'react';
 import { css } from '@emotion/css';
 import PageLayout from './layout/PageLayout';
 import { NamedLink, PostDataHeader } from '../types';
-import { Breakpoint, useBreakpoint } from './context';
+import { getRecipes } from './utils/posts';
 import { RecipeCard, PostCard, CardPost } from './layout/Cards';
 
 const graphBackgroundClass = css({
@@ -15,7 +15,7 @@ const overlayClass = css({
   width: '100%',
   height: '100%',
   position: 'absolute',
-  background: 'linear-gradient(180deg, rgba(255,255,255, 0) 0%, rgba(255, 255, 255,0) 85%, rgba(255, 255, 255, 1) 100%)',
+  background: 'linear-gradient(180deg, rgba(252,248,248, 0) 0%, rgba(252, 248, 248,0) 85%, rgba(252, 248, 248, 1) 100%)',
   zIndex: 1,
 });
 const titleContainerClass = css({
@@ -25,6 +25,7 @@ const titleContainerClass = css({
   justifyContent: 'center',
 });
 const titleClassName = css({
+  textAlign: 'center',
   fontSize: '5em',
   fontStyle: 'italic',
   zIndex: 2,
@@ -60,26 +61,30 @@ const getPosts = (posts: PostDataHeader[]): CardPost[] => {
       type: 'post',
       props: { ...p, postLink: p.articleLink },
     });
-    p.recipeLinks.forEach(r => {
-      result.push({ type: 'recipe', props: { ...p, recipeLink: r} });
-    })
+    const recipes = getRecipes(p).forEach(([link, header]) => {
+      result.push({
+        type: 'recipe',
+        props: {
+          recipeLink: link,
+          ...header,
+        },
+      });
+    });
   });
   return result;
 };
 
-const getCardListClass = (breakpoint: Breakpoint) => css({
+const cardListClass = css({
   display: 'flex',
   justifyContent: 'center',
   flexWrap: 'wrap',
   gap: '30px',
-  padding: breakpoint === Breakpoint.Small ? '30px 5px' : Breakpoint.Medium ? '30px 10%' : '30px 25%',
 });
 
 const PostCards: React.FC<IProps> = ({ posts }) => {
-  const breakpoint = useBreakpoint();
   const taggedPostData = React.useMemo(() => getPosts(posts), [posts]);
   return (
-    <section className={getCardListClass(breakpoint)}>
+    <section className={cardListClass}>
       {taggedPostData.map(post =>
         post.type === 'post' ? <PostCard key={post.props.postLink.name} {...post.props} /> : <RecipeCard key={post.props.recipeLink.name} {...post.props} />
       )}
@@ -89,7 +94,7 @@ const PostCards: React.FC<IProps> = ({ posts }) => {
 
 const pageLayoutClass = css({
   display: 'grid',
-  gridTemplateRows: '50vh',
+  gap: '15px',
   gridAutoRows: '1fr',
   gridTemplateColumns: '1fr',
 });
