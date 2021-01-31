@@ -42,11 +42,13 @@ const imageClass = css({
 const cardTopContainerClass = css({
   position: "relative",
 });
-const CardTop: React.FC<{ image: Image }> = ({ image }) => {
+const CardTop: React.FC<{ image: Image, link: NamedLink }> = ({ image, link }) => {
   return (
-    <div className={cardTopContainerClass}>
-      <img src={image.small ?? image.base} className={imageClass} />
-    </div>
+    <Link to={link.url}>
+      <div className={cardTopContainerClass}>
+        <img src={image.small ?? image.base} className={imageClass} />
+      </div>
+    </Link>
   );
 };
 
@@ -83,10 +85,6 @@ const contentTitleClass = css({
   fontSize: "1.1em",
 });
 const linkClass = css({
-  display: "grid",
-  gridTemplateRows: "1.5fr 1.5fr 1fr",
-  flexGrow: 1,
-  gap: "5px",
   color: "inherit",
   textDecoration: "none",
   ":visited": {
@@ -95,6 +93,12 @@ const linkClass = css({
   ":hover": {
     cursor: "pointer",
   },
+});
+const cardContentsContainerClass = css({
+  display: "grid",
+  gridTemplateRows: "1.5fr 1.5fr 1fr",
+  flexGrow: 1,
+  gap: "5px",
 });
 const titleSectionClass = css({
   color: Colors.Secondary,
@@ -129,9 +133,11 @@ const RecipeContent: React.FC<IRecipeCardProps> = ({
   difficulty,
 }) => {
   return (
-    <Link className={linkClass} to={recipeLink.url}>
+    <div className={cardContentsContainerClass}>
       <div className={titleSectionClass}>
-        <h3 className={contentTitleClass}>{recipeLink.name}</h3>
+        <Link to={recipeLink.url} className={linkClass}>
+          <h3 className={contentTitleClass}>{recipeLink.name}</h3>
+        </Link>
       </div>
       <p className={paragraphClass}>{description}</p>
       <div className={footerClass}>
@@ -149,14 +155,14 @@ const RecipeContent: React.FC<IRecipeCardProps> = ({
           {difficulty}
         </span>
       </div>
-    </Link>
+    </div>
   );
 };
 
 export const RecipeCard: React.FC<IRecipeCardProps> = (props) => (
   <CardLayout
     color={Colors.Secondary}
-    top={<CardTop image={props.recipeLink.image} />}
+    top={<CardTop image={props.recipeLink.image} link={props.recipeLink} />}
     content={<RecipeContent {...props} />}
   />
 );
@@ -168,9 +174,11 @@ const PostContent: React.FC<IPostCardProps> = ({
   publishDate,
 }) => {
   return (
-    <Link className={linkClass} to={postLink.url}>
+    <div className={cardContentsContainerClass}>
       <div className={titleSectionClass}>
-        <h3 className={contentTitleClass}>{postLink.name}</h3>
+        <Link to={postLink.url} className={linkClass}>
+          <h3 className={contentTitleClass}>{postLink.name}</h3>
+        </Link>
         <span className={dateClass}>{publishDate.toLocaleDateString()}</span>
       </div>
       <p className={paragraphClass}>{description}</p>
@@ -178,14 +186,14 @@ const PostContent: React.FC<IPostCardProps> = ({
         <label className={detailLabelClass}>Reading Time: </label>
         <span>{timeEstimate} Minutes</span>
       </div>
-    </Link>
+    </div>
   );
 };
 
 export const PostCard: React.FC<IPostCardProps> = (props) => (
   <CardLayout
     color={Colors.Third}
-    top={<CardTop image={props.postLink.image} />}
+    top={<CardTop image={props.postLink.image} link={props.postLink} />}
     content={<PostContent {...props} />}
   />
 );
