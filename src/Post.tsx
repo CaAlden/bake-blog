@@ -14,7 +14,7 @@ export default function Post({ data }: IProps) {
   return (
     <PageLayout title={data.title}>
       <article>
-        <img src={data.heroImage.base} />
+        <img src={data.articleLink?.image.base} />
         <div>
           <h1>{data.title}</h1>
           <div>

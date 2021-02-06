@@ -1,22 +1,29 @@
 import * as React from 'react';
+import { css } from '@emotion/css';
+import Header from './Header';
 
 interface IProps {
   title: string;
-  header?: React.ReactElement;
-  footer?: React.ReactElement;
 }
 
-const PageLayout: React.FC<IProps> = ({ title, header, footer, children }) => {
+const fillPageClassName = css({
+  width: '100vw',
+  height: '100vh',
+});
+
+const PageLayout: React.FC<IProps> = ({
+  title,
+  children,
+}) => {
   React.useEffect(() => {
     document.title = title;
   }, [title]);
 
   return (
-    <>
-      {header && <header>{header}</header>}
+    <div className={fillPageClassName}>
+      <Header />
       {children}
-      {footer && <footer>{footer}</footer>}
-    </>
+    </div>
   );
 };
 

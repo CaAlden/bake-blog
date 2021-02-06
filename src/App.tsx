@@ -8,25 +8,26 @@ import {
 } from 'react-router-dom';
 import ListLayout from './layout/ListLayout';
 import PageLayout from './layout/PageLayout';
-import { PostDataHeader } from '../types';
+import { NamedLink, PostDataHeader } from '../types';
 import FirstPost from './posts/first-post';
+import Homepage from './Homepage';
 import { header as firstPostHeader } from './posts/first-post/header-data';
 import { Breakpoint, BreakpointProvider } from './context';
 
-type Routes = Array<[PostDataHeader, React.ComponentType]>;
+type Routes = Array<[NamedLink, React.ComponentType]>;
 const RECIPES: Routes = [
 ];
 
 const POSTS: Routes = [
-  [firstPostHeader, FirstPost],
+  [firstPostHeader.articleLink, FirstPost],
 ];
 
 const Directory: React.FC<{routes: Routes; title: string }> = ({ routes, title, children }) => {
   const match = useRouteMatch();
   return (
     <Switch>
-      {routes.map(([header, Component]) =>
-        <Route path={`${match.path}/${header.slug}`} key={header.slug}>
+      {routes.map(([link, Component]) =>
+        <Route path={link.url} key={link.url}>
           <Component />
         </Route>
       )}
@@ -36,9 +37,9 @@ const Directory: React.FC<{routes: Routes; title: string }> = ({ routes, title, 
             <span>No Results</span>
           ) : (
             <ListLayout>
-              {routes.map(([header]) =>
-                <Link key={header.slug} to={`${match.path}/${header.slug}`}>
-                  {header.title}
+              {routes.map(([link]) =>
+                <Link key={link.url} to={link.url}>
+                  {link.name}
                 </Link>
               )}
             </ListLayout>
@@ -64,7 +65,7 @@ export default function App() {
             <Directory routes={POSTS} title="Posts" />
           </Route>
           <Route exact path="/">
-            TODO: Homepage
+            <Homepage posts={[firstPostHeader]} />
           </Route>
           <Route path="*">
             TODO: 404

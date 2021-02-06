@@ -9,6 +9,7 @@ export interface Image {
 export interface NamedLink {
   name: string;
   url: string;
+  image: Image;
 }
 
 export enum Difficulty {
@@ -42,13 +43,12 @@ export interface Recipe {
 type SelectedParameterId = string;
 export interface PostDataHeader {
   title: string;
+  description: string;
   publishDate: Date;
-  heroImage: Image;
   timeEstimate: number;
-  articleLink?: NamedLink;
-  recipeLinks?: NamedLink[];
+  articleLink: NamedLink;
+  recipeLinks: NamedLink[];
   difficulty: Difficulty;
-  slug: string;
 }
 export interface PostData extends PostDataHeader {
   parameters: Parameter[];
