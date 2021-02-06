@@ -6,7 +6,7 @@ import ListLayout from "./layout/ListLayout";
 import PageLayout from "./layout/PageLayout";
 
 interface IProps {
-  routes: Array<[Recipe<any>, React.ComponentType]>;
+  routes: Array<[Recipe, React.ComponentType]>;
 }
 
 const RecipeList: React.FC<IProps> = ({ routes }) => {
