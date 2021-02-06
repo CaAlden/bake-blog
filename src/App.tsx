@@ -14,7 +14,7 @@ import Homepage from './Homepage';
 import PostList from './PostList';
 import RecipeList from './RecipeList';
 import { data as firstPostData } from './posts/first-post/data';
-import { Breakpoint, BreakpointProvider } from './context';
+import { Breakpoint, BreakpointProvider, QueryProvider } from './context';
 import { getRecipes } from './utils/posts';
 import connectData, { connectRecipe } from './utils/connectData';
 import Recipe from './Recipe';
@@ -31,20 +31,22 @@ export default function App() {
   return (
     <BreakpointProvider>
       <Router>
-        <Switch>
-          <Route path="/recipes">
-            <RecipeList routes={RECIPES} />
-          </Route>
-          <Route path="/posts">
-            <PostList routes={POSTS} />
-          </Route>
-          <Route exact path="/">
-            <Homepage posts={[firstPostData]} />
-          </Route>
-          <Route path="*">
-            TODO: 404
-          </Route>
-        </Switch>
+        <QueryProvider>
+          <Switch>
+            <Route path="/recipes">
+              <RecipeList routes={RECIPES} />
+            </Route>
+            <Route path="/posts">
+              <PostList routes={POSTS} />
+            </Route>
+            <Route exact path="/">
+              <Homepage posts={[firstPostData]} />
+            </Route>
+            <Route path="*">
+              TODO: 404
+            </Route>
+          </Switch>
+        </QueryProvider>
       </Router>
     </BreakpointProvider>
   );

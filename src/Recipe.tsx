@@ -169,11 +169,35 @@ const recipeSidebarClass = css({
 const articleClass = css({
   flexGrow: 3,
 });
+
+const useSettings = (params: Parameter[]) => {
+  const defaultSettings = params.map(p => p.settings[0]);
+  const [settings, setSettings] = React.useState<string[]>(defaultSettings);
+  const [fullSetting, setFullSetting] = React.useState(defaultSettings.join('-'));
+  const { query, setQuery } = useQueryContext();
+  React.useEffect(() => {
+    const updates = query;
+    params.forEach((p, i) => {
+      if (query[p.name] !== settings[i]) {
+        updates[p.name] = settings[i];
+      }
+    });
+    setQuery(updates);
+  }, [settings, query, params]);
+
+  return {
+    detail: fullSetting,
+    settings,
+    updateSettings: (newSettings: string[]) => {
+      setSettings(newSettings);
+      setFullSetting(newSettings.join('-'));
+    }
+  };
+}
+
 export default function Recipe({ data }: IProps) {
   const [units] = useUnits();
-  const [settings, updateSettings] = React.useState<string[]>(
-    data.parameters.map((p) => p.settings[0] ?? "")
-  );
+  const { settings, detail, updateSettings } = useSettings(data.parameters);
   const selectedRecipe: IRecipeDetail = data.details.get(settings.join("-"));
   return (
     <PageLayout title={data.link.name}>
