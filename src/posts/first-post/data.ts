@@ -169,6 +169,7 @@ const chocolateChip: Recipe = {
 };
 export const data: PostData = {
   title: "First Post",
+  author: "Campbell Alden",
   description: "First post test description",
   articleLink: {
     url: "/posts/first-post",
