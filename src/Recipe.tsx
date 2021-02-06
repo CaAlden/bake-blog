@@ -11,6 +11,7 @@ import { useUnits } from "./utils/config";
 import HeroImage from "./layout/HeroImage";
 import PageLayout from "./layout/PageLayout";
 import Markdown from "./utils/Markdown";
+import { useQueryContext } from "./context";
 
 const sliderContainerClass = css({
   flexGrow: 1,
