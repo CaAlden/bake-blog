@@ -4,6 +4,7 @@ import { Link, useRouteMatch } from 'react-router-dom';
 import { Colors } from '../../utils/Colors';
 import Navigation from './Navigation';
 import UnitsSwitch from '../../UnitsSwitch';
+import { Breakpoint, useBreakpoint } from '../../context';
 
 const NavigationLinks = [
   { to: '/posts', label: 'Posts', color: Colors.Third },
@@ -12,6 +13,8 @@ const NavigationLinks = [
 
 const getHeaderClass = (color: string) => css({
   display: 'flex',
+  flexWrap: 'wrap',
+  gap: '25px',
   justifyContent: 'stretch',
   background: color,
   color: Colors.White,
@@ -22,8 +25,9 @@ const getHeaderClass = (color: string) => css({
   top: 0,
 });
 
-const titleClass = css({
+const getTitleClass = (breakpoint: Breakpoint) => css({
   margin: 0,
+  textAlign: breakpoint === Breakpoint.Small ? 'center' : undefined,
 });
 
 const headerLinkClass = css({
@@ -39,16 +43,16 @@ const headerLinkClass = css({
   },
 });
 
-const unitsContainer = css({
+const getUnitsContainerClass = (breakpoint: Breakpoint) => css({
   display: 'flex',
+  flexGrow: breakpoint === Breakpoint.Small ? 1 : 0,
   justifyContent: 'center',
   alignItems: 'center',
-  paddingLeft: '25px',
-  paddingRight: '10px',
 });
 
 const Header = () => {
   const route = useRouteMatch();
+  const breakpoint = useBreakpoint();
   const matchedColor = React.useMemo(() => {
     const match = route.path.startsWith('/posts') ? Colors.Third :
       route.path.startsWith('/recipes') ? Colors.Secondary :
@@ -59,10 +63,12 @@ const Header = () => {
   return (
     <header className={getHeaderClass(matchedColor)}>
       <Link to="/" className={headerLinkClass}>
-        <h1 className={titleClass}>Bake Blog</h1>
+        <h1 className={getTitleClass(breakpoint)}>Bake Blog</h1>
       </Link>
-      <Navigation items={NavigationLinks} />
-      <div className={unitsContainer}>
+      <div style={{ display: 'flex' }}>
+        <Navigation items={NavigationLinks} />
+      </div>
+      <div className={getUnitsContainerClass(breakpoint)}>
         <UnitsSwitch />
       </div>
     </header>
