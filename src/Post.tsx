@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { PostData } from '../types';
 import Markdown from './utils/Markdown';
-import { useUnits } from './context';
+import { useUnits } from './utils/config';
 import PageLayout from './layout/PageLayout';
 import HeroImage from './layout/HeroImage';
 import { css } from '@emotion/css';
@@ -33,7 +33,7 @@ const articleClass = css({
 });
 const dateClass = css({});
 export default function Post({ data }: IProps) {
-  const unit = useUnits();
+  const [unit] = useUnits();
   return (
     <PageLayout title={data.title}>
       <article className={postLayoutClass}>

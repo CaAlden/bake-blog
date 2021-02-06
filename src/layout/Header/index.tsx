@@ -3,6 +3,7 @@ import { css } from '@emotion/css';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { Colors } from '../../utils/Colors';
 import Navigation from './Navigation';
+import UnitsSwitch from '../../UnitsSwitch';
 
 const NavigationLinks = [
   { to: '/posts', label: 'Posts', color: Colors.Third },
@@ -11,7 +12,7 @@ const NavigationLinks = [
 
 const getHeaderClass = (color: string) => css({
   display: 'flex',
-  justifyContent: 'space-between',
+  justifyContent: 'stretch',
   background: color,
   color: Colors.White,
   padding: '15px',
@@ -26,6 +27,8 @@ const titleClass = css({
 });
 
 const headerLinkClass = css({
+  cursor: 'pointer',
+  flexGrow: 1,
   color: Colors.White,
   textDecoration: 'none',
   ':active': {
@@ -34,6 +37,14 @@ const headerLinkClass = css({
   ':visited': {
     color: Colors.White,
   },
+});
+
+const unitsContainer = css({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  paddingLeft: '25px',
+  paddingRight: '10px',
 });
 
 const Header = () => {
@@ -51,6 +62,9 @@ const Header = () => {
         <h1 className={titleClass}>Bake Blog</h1>
       </Link>
       <Navigation items={NavigationLinks} />
+      <div className={unitsContainer}>
+        <UnitsSwitch />
+      </div>
     </header>
   );
 };

@@ -10,7 +10,3 @@ export enum Breakpoint {
 const BreakpointContext = createContext(Breakpoint.Small);
 export const BreakpointProvider = BreakpointContext.Provider;
 export const useBreakpoint = () => useContext(BreakpointContext);
-
-const UnitContext = createContext(Units.Metric);
-export const UnitProvider = UnitContext.Provider;
-export const useUnits = () => useContext(UnitContext);

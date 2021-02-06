@@ -7,7 +7,7 @@ import {
   IRecipeDetail,
   Ingredient,
 } from "../types";
-import { useUnits } from "./context";
+import { useUnits } from "./utils/config";
 import HeroImage from "./layout/HeroImage";
 import PageLayout from "./layout/PageLayout";
 import Markdown from "./utils/Markdown";
@@ -122,7 +122,7 @@ const tableRowClass = css({});
 const Ingredients: React.FC<{ ingredients: Ingredient[] }> = ({
   ingredients,
 }) => {
-  const units = useUnits();
+  const [units] = useUnits();
   return (
     <table className={tableClass}>
       <tbody>
@@ -170,7 +170,7 @@ const articleClass = css({
   flexGrow: 3,
 });
 export default function Recipe({ data }: IProps) {
-  const units = useUnits();
+  const [units] = useUnits();
   const [settings, updateSettings] = React.useState<string[]>(
     data.parameters.map((p) => p.settings[0] ?? "")
   );
