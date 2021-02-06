@@ -82,7 +82,7 @@ const CardLayout: React.FC<{
 
 const contentTitleClass = css({
   margin: 0,
-  fontSize: "1.1em",
+  fontSize: "1.25em",
 });
 const linkClass = css({
   color: "inherit",
@@ -110,6 +110,7 @@ const titleSectionClass = css({
 const dateClass = css({
   color: "gray",
   fontSize: "0.8em",
+  fontWeight: "lighter",
 });
 const paragraphClass = css({
   margin: 0,

@@ -31,7 +31,9 @@ const articleClass = css({
   padding: '0 25%',
   disply: 'flex',
 });
-const dateClass = css({});
+const dateClass = css({
+  fontWeight: "lighter",
+});
 export default function Post({ data }: IProps) {
   const [unit] = useUnits();
   return (

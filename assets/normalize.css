@@ -351,3 +351,19 @@ template {
 h1,h2,h3,div,section,body,html,span,table,tbody,tr,td {
   box-sizing: border-box;
 }
+
+/*
+ * Add font styles for things
+ */
+
+p {
+  line-height: 1.5;
+}
+
+h1,h2,h3,h4,h5 {
+ font-family: 'Playfair Display', serif;
+}
+
+html {
+  font-family: 'Noto Sans JP', sans-serif;
+}

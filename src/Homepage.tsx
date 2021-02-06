@@ -27,17 +27,10 @@ const titleContainerClass = css({
 const titleClassName = css({
   textAlign: 'center',
   fontSize: '5em',
-  fontStyle: 'italic',
   zIndex: 2,
-  WebkitTextStroke: '1px black',
   color: '#fff',
-  textShadow: `
-      3px 3px 0 #000,
-    -1px -1px 0 #000,
-     1px -1px 0 #000,
-     -1px 1px 0 #000,
-      1px 1px 0 #000;
-  `,
+  background: '#000',
+  padding: '20px',
 });
 const HeroTitle: React.FC = () => {
   return (

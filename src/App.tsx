@@ -19,8 +19,8 @@ import { getRecipes } from './utils/posts';
 import connectData, { connectRecipe } from './utils/connectData';
 import Recipe from './Recipe';
 
-const RECIPES: Array<[RecipeData<any>, React.ComponentType]> = [
-  ...getRecipes(firstPostData).map((recipe): [RecipeData<any>, React.ComponentType] => [recipe, connectRecipe(recipe, Recipe) ]),
+const RECIPES: Array<[RecipeData, React.ComponentType]> = [
+  ...getRecipes(firstPostData).map((recipe): [RecipeData, React.ComponentType] => [recipe, connectRecipe(recipe, Recipe) ]),
 ];
 
 const POSTS: Array<[PostDataHeader, React.ComponentType]> = [
@@ -29,7 +29,7 @@ const POSTS: Array<[PostDataHeader, React.ComponentType]> = [
 
 export default function App() {
   return (
-    <BreakpointProvider value={Breakpoint.Large}>
+    <BreakpointProvider>
       <Router>
         <Switch>
           <Route path="/recipes">
