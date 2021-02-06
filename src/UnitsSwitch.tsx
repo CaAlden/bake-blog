@@ -1,21 +1,30 @@
 import { css } from '@emotion/css';
 import * as React from 'react';
 import { Units } from '../types';
+import { Colors } from './utils/Colors';
 import { useUnits } from './utils/config';
 
 const unitOptionButton = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
   outline: 'none',
   background: 'inherit',
   padding: '5px',
+  width: '30px',
+  height: '30px',
   margin: 0,
   border: 'none',
   color: '#fff',
   cursor: 'pointer',
+  borderRadius: "100%",
 }
 
 const unselectedButton = css(unitOptionButton);
 const selectedButton = css({
   ...unitOptionButton,
+  background: '#fff',
+  color: '#000',
   fontWeight: 'bold',
 });
 
