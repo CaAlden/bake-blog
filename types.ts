@@ -49,7 +49,7 @@ export interface Recipe {
 }
 export interface PostDataHeader {
   title: string;
-  author: string;
+  author?: string;
   description: string;
   publishDate: Date;
   timeEstimate: number;
