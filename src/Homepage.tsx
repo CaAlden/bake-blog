@@ -23,6 +23,8 @@ const titleContainerClass = css({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  flexGrow: 1,
+  paddingBottom: '15px',
 });
 const titleClassName = css({
   textAlign: 'center',
@@ -94,23 +96,16 @@ const PostCards: React.FC<IProps> = ({ posts }) => {
   );
 };
 
-const pageLayoutClass = css({
-  display: 'grid',
-  gap: '15px',
-  gridTemplateRows: 'minmax(400px, 40vh) 1fr 10px',
-  gridTemplateColumns: '1fr',
-});
-
 const Homepage: React.FC<IProps> = ({
   children,
   posts,
 }) => {
   return (
-    <PageLayout title="Bake Blog">
-      <main className={pageLayoutClass}>
-        <HeroTitle />
-        <PostCards posts={posts} />
-      </main>
+    <PageLayout
+      title="Bake Blog"
+      hero={<HeroTitle />}
+    >
+      <PostCards posts={posts} />
     </PageLayout>
   );
 }

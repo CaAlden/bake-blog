@@ -67,7 +67,7 @@ const listClass = css({
   display: "flex",
   flexDirection: "column",
   flexGrow: 1,
-  minWidth: "320px",
+  minWidth: "310px",
   maxWidth: "500px",
   padding: "10px",
   background: "#fff",
@@ -102,7 +102,7 @@ const Parameters: React.FC<{
 };
 
 const tableClass = css({
-  minWidth: "320px",
+  minWidth: "310px",
   maxWidth: "500px",
   flexGrow: 1,
   borderCollapse: "collapse",
@@ -148,7 +148,6 @@ interface IProps {
 
 const recipeLayoutClass = css({
   display: "grid",
-  gridTemplateRows: "minmax(400px, 60vh)",
   gap: "10px",
   gridAutoRows: "1fr",
   flexGrow: 1,
@@ -165,7 +164,7 @@ const recipeSidebarClass = css({
   display: "flex",
   flexDirection: "column",
   flexGrow: 1,
-  flexBasis: "320px",
+  flexBasis: "310px",
 });
 const articleClass = css({
   flexGrow: 3,
@@ -201,9 +200,11 @@ export default function Recipe({ data }: IProps) {
   const { settings, detail, updateSettings } = useSettings(data.parameters);
   const selectedRecipe: IRecipeDetail = data.details.get(settings.join("-"));
   return (
-    <PageLayout title={data.link.name}>
+    <PageLayout
+      title={data.link.name}
+      hero={<HeroImage image={data.link.image} text={data.link.name} />}
+    >
       <article className={recipeLayoutClass}>
-        <HeroImage image={data.link.image} text={data.link.name} />
         <div className={recipeMainClass}>
           <section className={articleClass}>
             <Markdown markdown={selectedRecipe.steps[units]} />

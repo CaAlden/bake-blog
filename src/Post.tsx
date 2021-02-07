@@ -12,7 +12,7 @@ interface IProps {
 
 const postLayoutClass = css({
   display: 'grid',
-  gridTemplateRows: 'minmax(400px, 60vh) 30px',
+  gridTemplateRows: '30px',
   gap: '10px',
   gridAutoRows: '1fr',
   flexGrow: 1,
@@ -28,8 +28,8 @@ const frontMatterClass = css({
 });
 
 const articleClass = css({
-  padding: '0 25%',
-  disply: 'flex',
+  display: 'flex',
+  flexDirection: 'column',
 });
 const dateClass = css({
   fontWeight: "lighter",
@@ -37,9 +37,11 @@ const dateClass = css({
 export default function Post({ data }: IProps) {
   const [unit] = useUnits();
   return (
-    <PageLayout title={data.title}>
+    <PageLayout
+      title={data.title}
+      hero={<HeroImage text={data.title} image={data.articleLink.image} />}
+    >
       <article className={postLayoutClass}>
-        <HeroImage text={data.title} image={data.articleLink.image} />
         <div className={frontMatterClass}>
           <span>{data.author ?? 'Campbell Alden'}</span>
           <span className={dateClass}>{data.publishDate.toLocaleString()}</span>

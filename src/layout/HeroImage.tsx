@@ -18,6 +18,7 @@ const getHeroImageClass = (image: Image) => css({
   justifyContent: 'center',
   alignItems: 'center',
   width: '100%',
+  minHeight: '400px',
   height: '60vh',
   color: '#fff',
 });
@@ -25,6 +26,7 @@ const getHeroImageClass = (image: Image) => css({
 const textClass = css({
   fontSize: 'calc(3rem + 2vw)',
   textAlign: 'center',
+  mixBlendMode: 'difference',
   margin: 0,
 });
 export default function HeroImage(props: IProps) {

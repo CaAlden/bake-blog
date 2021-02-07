@@ -10,6 +10,7 @@ export enum Breakpoint {
   Medium = 720,
   Large = 1024,
 }
+export const breakpointCases = <R,>(cases: {[B in Breakpoint]: R}) => (breakpoint: Breakpoint): R => cases[breakpoint];
 
 const breakpoints = [Breakpoint.Large, Breakpoint.Medium, Breakpoint.Small];
 
