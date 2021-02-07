@@ -96,7 +96,7 @@ const getCrispySteps = (units: Units) => `
 **Preparation**: It is important for the butter to be kept at room tempurature (${units === Units.Imperial ? '75°F' : '25°C'})
 so that the blending process is easier.
 
-1. Preheat the oven to ${units === Units.Imperial ? '375°F' : '190°C'}
+1. Preheat the **oven** to **${units === Units.Imperial ? '375°F' : '190°C'}**
 2. Mix together the butter and sugar in a medium sized mixing bowl until the the mixture is smooth.
 3. Add the Egg to the mixture and stir well to fully incorperate.
 4. In a separate bowl, mix together the dry ingredients briefly.

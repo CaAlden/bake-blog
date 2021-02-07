@@ -7,16 +7,18 @@ import {
   IRecipeDetail,
   Ingredient,
 } from "../types";
-import { useUnits } from "./context";
+import { Breakpoint, useBreakpoint, useUnits } from "./context";
 import HeroImage from "./layout/HeroImage";
 import PageLayout from "./layout/PageLayout";
-import Markdown from "./utils/Markdown";
+import { RecipeMarkdown as Markdown } from "./utils/Markdown";
 import { useQueryContext } from "./context";
 
 const sliderContainerClass = css({
   flexGrow: 1,
   flexDirection: "column",
   display: "flex",
+  maxWidth: '500px',
+  minWidth: '310px',
 });
 const optionsClass = css({
   display: "flex",
@@ -66,9 +68,8 @@ const ParameterRange: React.FC<{
 const listClass = css({
   display: "flex",
   flexDirection: "column",
-  flexGrow: 1,
   minWidth: "310px",
-  maxWidth: "500px",
+  alignItems: 'center',
   padding: "10px",
   background: "#fff",
 });
@@ -82,7 +83,7 @@ const Parameters: React.FC<{
   }
   return (
     <section className={listClass}>
-      <h3>Recipe Preferences</h3>
+      <h2>Recipe Preferences</h2>
       {parameters.map((p, i) => (
         <ParameterRange
           parameter={p}
@@ -103,7 +104,6 @@ const Parameters: React.FC<{
 
 const tableClass = css({
   minWidth: "310px",
-  maxWidth: "500px",
   flexGrow: 1,
   borderCollapse: "collapse",
   border: "1px solid black",
@@ -119,7 +119,6 @@ const tableCellClass = css({
   padding: "10px",
   border: "1px solid black",
 });
-const tableRowClass = css({});
 const Ingredients: React.FC<{ ingredients: Ingredient[] }> = ({
   ingredients,
 }) => {
@@ -132,7 +131,7 @@ const Ingredients: React.FC<{ ingredients: Ingredient[] }> = ({
           <td className={tableHeaderCellClass}>Amount</td>
         </tr>
         {ingredients.map((ingredient) => (
-          <tr className={tableRowClass} key={`${ingredient.name}-${units}`}>
+          <tr key={`${ingredient.name}-${units}`}>
             <td className={tableCellClass}>{ingredient.name}</td>
             <td className={tableCellClass}>{ingredient.amount[units]}</td>
           </tr>
@@ -149,6 +148,7 @@ interface IProps {
 const recipeLayoutClass = css({
   display: "grid",
   gap: "10px",
+  paddingTop: '20px',
   gridAutoRows: "1fr",
   flexGrow: 1,
 });
@@ -157,24 +157,35 @@ const recipeMainClass = css({
   display: "flex",
   flexWrap: "wrap-reverse",
   flexGrow: 1,
+  gap: '15px',
 });
-const recipeSidebarClass = css({
-  position: "sticky",
-  top: 0,
+
+const recipeSidebarClass = (breakpoint: Breakpoint) => css({
   display: "flex",
   flexDirection: "column",
   flexGrow: 1,
+  justifyContent: breakpoint === Breakpoint.Large ? 'flex-start': 'center',
   flexBasis: "310px",
 });
 const articleClass = css({
   flexGrow: 3,
+  flexBasis: '600px',
+  background: '#fff',
+  padding: '0.5em 3em',
 });
 
 const useSettings = (params: Parameter[]) => {
-  const defaultSettings = params.map(p => p.settings[0]);
+  const { query, setQuery } = useQueryContext();
+  const defaultSettings = params.map(p => {
+    const q = query[p.name];
+    if (typeof q === 'string' && p.settings.find(s => s === q)) {
+      return q;
+    } else {
+      return p.settings[0];
+    }
+  });
   const [settings, setSettings] = React.useState<string[]>(defaultSettings);
   const [fullSetting, setFullSetting] = React.useState(defaultSettings.join('-'));
-  const { query, setQuery } = useQueryContext();
   React.useEffect(() => {
     const updates = query;
     params.forEach((p, i) => {
@@ -197,6 +208,7 @@ const useSettings = (params: Parameter[]) => {
 
 export default function Recipe({ data }: IProps) {
   const [units] = useUnits();
+  const breakpoint = useBreakpoint();
   const { settings, detail, updateSettings } = useSettings(data.parameters);
   const selectedRecipe: IRecipeDetail = data.details.get(settings.join("-"));
   return (
@@ -209,7 +221,7 @@ export default function Recipe({ data }: IProps) {
           <section className={articleClass}>
             <Markdown markdown={selectedRecipe.steps[units]} />
           </section>
-          <div className={recipeSidebarClass}>
+          <div className={recipeSidebarClass(breakpoint)}>
             <Parameters
               parameters={data.parameters}
               settings={settings}
