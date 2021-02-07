@@ -28,8 +28,11 @@ interface IRecipeCardPost {
 
 export type CardPost = IPostCardPost | IRecipeCardPost;
 
-const imageClass = css({
+const getImageClass = (url: string) => css({
   background: "white",
+  backgroundImage: `url(${url})`,
+  backgroundPosition: 'center',
+  backgroundRepeat: 'no-repeat',
   position: "absolute",
   right: "calc(50% - 116px)",
   top: "-50px",
@@ -46,7 +49,7 @@ const CardTop: React.FC<{ image: Image, link: NamedLink }> = ({ image, link }) =
   return (
     <Link to={link.url}>
       <div className={cardTopContainerClass}>
-        <img src={image.small ?? image.base} className={imageClass} />
+        <img className={getImageClass(link.image.small ?? link.image.medium ?? link.image.large )} />
       </div>
     </Link>
   );

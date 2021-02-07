@@ -1,8 +1,8 @@
 import * as iots from 'io-ts';
 import { isLeft } from 'fp-ts/lib/Either';
 export interface Image {
-  base: string;
-  large?: string;
+  large: string;
+  medium?: string;
   small?: string;
 }
 

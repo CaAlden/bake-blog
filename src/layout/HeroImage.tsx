@@ -8,7 +8,7 @@ interface IProps {
 }
 
 const getHeroImageClass = (image: Image) => css({
-  backgroundImage: `url(${image.large ?? image.base})`,
+  backgroundImage: `url(${image.large ?? image.large})`,
   backgroundRepeat: 'no-repeat',
   backgroundAttachment: 'fixed',
   backgroundPosition: 'center',

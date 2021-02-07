@@ -1,10 +1,13 @@
 import { Units, PostData, Recipe, Difficulty, Image } from "../../../types";
-import Hero from "../../../assets/scooby.png";
+import HeroLarge from "../../../assets/img/placeholder_large.webp";
+import HeroMedium from "../../../assets/img/placeholder_medium.webp";
+import HeroSmall from "../../../assets/img/placeholder_small.webp";
 import { getAllPurposeFlour, getButter, getEggs, getEggWhite, getSugar, getYolk } from "../../utils/ingredients";
 
 const heroImage: Image = {
-  base: Hero,
-  small: Hero,
+  large: HeroLarge,
+  medium: HeroMedium,
+  small: HeroSmall,
 };
 const getBlog = (unit: Units): string => `
 # Erat Atlas est
