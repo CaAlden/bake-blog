@@ -181,7 +181,7 @@ export const data: PostData = {
     image: heroImage,
   },
   publishDate: new Date("2021-01-23T15:04:34.281Z"),
-  timeEstimate: 30,
+  timeEstimate: 8,
   blog: {
     [Units.Metric]: getBlog(Units.Metric),
     [Units.Imperial]: getBlog(Units.Imperial),

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { IAuthor, ISocialLink, PostData } from '../types';
 import Markdown from './utils/Markdown';
-import { useUnits } from './context';
+import { Breakpoint, useBreakpoint, useUnits } from './context';
 import PageLayout from './layout/PageLayout';
 import HeroImage from './layout/HeroImage';
 import { css } from '@emotion/css';
@@ -13,9 +13,11 @@ const SocialLink: React.FC<{ link: ISocialLink }> = ({ link }) => {
   );
 };
 
-const avatarContainerClass = css({
+const getAvatarContainerClass = (breakpoint: Breakpoint) => css({
   display: 'flex',
   alignItems: 'center',
+  justifyContent: breakpoint === Breakpoint.Small ? 'center' : 'flex-start',
+  flexGrow: 1,
   gap: '20px',
 });
 const imageClass = css({
@@ -43,8 +45,9 @@ const AuthorAvatar: React.FC<IAuthor> = ({
   socialLinks,
   image,
 }) => {
+  const breakpoint = useBreakpoint();
   return (
-    <div className={avatarContainerClass}>
+    <div className={getAvatarContainerClass(breakpoint)}>
       <img className={imageClass} src={image.small ?? image.medium ?? image.large} />
       <div className={infoAsideClass}>
         <span className={nameClass}>{name}</span>
@@ -62,9 +65,9 @@ interface IProps {
   data: PostData;
 }
 
-const postLayoutClass = css({
+const getPostLayoutClass = (breakpoint: Breakpoint) => css({
   display: 'grid',
-  gridTemplateRows: '100px',
+  gridTemplateRows: breakpoint === Breakpoint.Small ? '180px' : '100px',
   paddingTop: '10px',
   gridAutoRows: '1fr',
   flexGrow: 1,
@@ -87,17 +90,40 @@ const articleClass = css({
 const dateClass = css({
   fontWeight: "lighter",
 });
+const getPostInfoAside = (breakpoint: Breakpoint) => css({
+  display: 'flex',
+  gap: '10px',
+  flexGrow: 1,
+  flexDirection: 'column',
+  alignItems: breakpoint === Breakpoint.Small ? 'center' : 'flex-end',
+});
+
+const timeEstimateClass = css({
+  fontSize: '0.8em',
+});
+const TimeEstimate: React.FC<{ timeEstimate: number }> = ({ timeEstimate }) => {
+  const timeJars = Array(Math.min(5, Math.round(timeEstimate / 3))).fill('⏳');
+  const calculatedMessage = `${timeJars.join('')} (~${timeEstimate} minutes)`;
+  return (
+    <span className={timeEstimateClass}>{calculatedMessage}</span>
+  );
+};
+
 export default function Post({ data }: IProps) {
   const [unit] = useUnits();
+  const breakpoint = useBreakpoint();
   return (
     <PageLayout
       title={data.title}
       hero={<HeroImage text={data.title} image={data.articleLink.image} />}
     >
-      <article className={postLayoutClass}>
+      <article className={getPostLayoutClass(breakpoint)}>
         <div className={frontMatterClass}>
           {data.author && <AuthorAvatar {...data.author} />}
-          <span className={dateClass}>{data.publishDate.toLocaleString()}</span>
+          <div className={getPostInfoAside(breakpoint)}>
+            <span className={dateClass}>{data.publishDate.toLocaleString()}</span>
+            <TimeEstimate timeEstimate={data.timeEstimate} />
+          </div>
         </div>
         <section className={articleClass}>
           <Markdown markdown={data.blog[unit]} />
