@@ -2,7 +2,7 @@ import { css } from '@emotion/css';
 import * as React from 'react';
 import { Units } from '../types';
 import { Colors } from './utils/Colors';
-import { useUnits } from './utils/config';
+import { useUnits } from './context';
 
 const unitOptionButton = {
   display: 'flex',

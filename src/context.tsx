@@ -3,6 +3,7 @@ import useResizeObserver from "@react-hook/resize-observer";
 import { parse, stringify } from "query-string";
 import { Units } from "../types";
 import { useHistory } from "react-router-dom";
+import { IConfigContext, IPreferences, useConfigContext } from "./utils/config";
 
 export enum Breakpoint {
   Small = 320,
@@ -70,3 +71,23 @@ export const QueryProvider: React.FC = ({ children }) => {
 };
 
 export const useQueryContext = () => React.useContext(QueryContext);
+
+const ConfigContext = React.createContext<IConfigContext>({
+  config: { units: Units.Metric },
+  setConfig: () => console.warn('setConfig called before configured'),
+});
+export const ConfigProvider: React.FC = ({ children }) => {
+  const configContext = useConfigContext();
+  return (
+    <ConfigContext.Provider value={configContext}>
+      {children}
+    </ConfigContext.Provider>
+  );
+};
+
+export const useConfig = () => React.useContext(ConfigContext);
+export const useUnits = () => {
+  const { config, setConfig } = useConfig();
+  const setUnits = (units: Units) => setConfig({ ...config, units });
+  return [config.units, setUnits] as const;
+};

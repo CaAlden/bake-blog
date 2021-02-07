@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { PostData } from '../types';
 import Markdown from './utils/Markdown';
-import { useUnits } from './utils/config';
+import { useUnits } from './context';
 import PageLayout from './layout/PageLayout';
 import HeroImage from './layout/HeroImage';
 import { css } from '@emotion/css';

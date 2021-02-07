@@ -7,7 +7,7 @@ import {
   IRecipeDetail,
   Ingredient,
 } from "../types";
-import { useUnits } from "./utils/config";
+import { useUnits } from "./context";
 import HeroImage from "./layout/HeroImage";
 import PageLayout from "./layout/PageLayout";
 import Markdown from "./utils/Markdown";
@@ -132,7 +132,7 @@ const Ingredients: React.FC<{ ingredients: Ingredient[] }> = ({
           <td className={tableHeaderCellClass}>Amount</td>
         </tr>
         {ingredients.map((ingredient) => (
-          <tr className={tableRowClass} key={ingredient.name}>
+          <tr className={tableRowClass} key={`${ingredient.name}-${units}`}>
             <td className={tableCellClass}>{ingredient.name}</td>
             <td className={tableCellClass}>{ingredient.amount[units]}</td>
           </tr>

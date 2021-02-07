@@ -1,5 +1,4 @@
-/* global localStorage */
-import { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 
 export const useLocalStorageValue = (key: string) => {
   const [value, setValue] = useState<undefined | string>(localStorage.getItem(key));
@@ -15,13 +14,13 @@ export const useLocalStorageValue = (key: string) => {
     };
   }, [key]);
 
-  const updateStoreValue = useCallback((val: string) => {
-    localStorage.setItem(key, val);
+  const updateStoreValue = (val: string) => {
     setValue(val);
-  }, [key]);
-  const removeValue = useCallback(() => {
+    localStorage.setItem(key, val);
+  };
+  const removeValue = () => {
     localStorage.removeItem(key);
     setValue(undefined);
-  }, [key]);
+  };
   return { value, setValue: updateStoreValue, removeValue };
 };

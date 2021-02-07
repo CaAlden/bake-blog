@@ -2,11 +2,11 @@ import { getOrElse } from 'fp-ts/lib/Either';
 import * as t from 'io-ts';
 import { left } from 'fp-ts/lib/Either';
 import { PathReporter } from 'io-ts/PathReporter';
-import { useCallback, useMemo } from 'react';
+import { useEffect } from 'react';
 import { Units } from '../../types';
 import { useLocalStorageValue } from './storage';
 
-interface IPreferences {
+export interface IPreferences {
   units: Units;
 }
 
@@ -18,35 +18,26 @@ const preferencesCodec: t.Type<IPreferences> = t.type({
 });
 
 const getConfigWithDefault = getOrElse<t.Errors, IPreferences>((x) => {
-  console.log(PathReporter.report(left(x)));
+  console.warn(PathReporter.report(left(x)));
   return ({
     units: Units.Metric,
   });
 });
 
+export interface IConfigContext {
+  config: IPreferences;
+  setConfig: (p: IPreferences) => void;
+}
+
 const CONFIGURATION_STORAGE_KEY = 'CONFIGURATION';
-export const useConfig = () => {
+export const useConfigContext = () => {
   const { value, setValue } = useLocalStorageValue(CONFIGURATION_STORAGE_KEY);
-  const config = useMemo(() => {
-    const storedConfig = JSON.parse(value ?? '{}');
-    return getConfigWithDefault(preferencesCodec.decode(storedConfig));
-  }, [value]);
+  const storedConfig = JSON.parse(value ?? '{}');
+  const config = getConfigWithDefault(preferencesCodec.decode(storedConfig));
 
-  const setConfig = useCallback((newConfig: IPreferences) => {
+  const setConfig = (newConfig: IPreferences) => {
     setValue(JSON.stringify(newConfig));
-  }, [setValue]);
+  };
 
-  return [config, setConfig] as const;
-};
-
-export const useUnits = () => {
-  const [config, setConfig] = useConfig();
-  const units = config.units;
-  const setUnits = useCallback((units: Units) => {
-    setConfig({
-      ...config,
-      units,
-    });
-  }, [setConfig, config])
-  return [units, setUnits] as const;
+  return { config, setConfig };
 };
