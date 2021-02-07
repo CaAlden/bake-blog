@@ -1,7 +1,8 @@
-import { Units, PostData, Recipe, Difficulty, Image } from "../../../types";
+import { Units, PostData, Recipe, Difficulty, Image, SocialSites } from "../../../types";
 import HeroLarge from "../../../assets/img/placeholder_large.webp";
 import HeroMedium from "../../../assets/img/placeholder_medium.webp";
 import HeroSmall from "../../../assets/img/placeholder_small.webp";
+import { CampbellAuthor } from '../../../assets/authors';
 import { getAllPurposeFlour, getButter, getEggs, getEggWhite, getSugar, getYolk } from "../../utils/ingredients";
 
 const heroImage: Image = {
@@ -172,7 +173,7 @@ const chocolateChip: Recipe = {
 };
 export const data: PostData = {
   title: "First Post",
-  author: "Campbell Alden",
+  author: CampbellAuthor,
   description: "First post test description",
   articleLink: {
     url: "/posts/first-post",

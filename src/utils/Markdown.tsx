@@ -4,6 +4,8 @@ import parse from 'remark-parse'
 import remark2react from 'remark-react'
 import { css } from '@emotion/css';
 import { Colors } from './Colors';
+import { parseUrl } from 'query-string';
+import { Link } from 'react-router-dom';
 
 interface IProps {
   markdown: string;
@@ -53,9 +55,30 @@ const RecipeOL: React.FC = ({ children }) => (
 const recipeStrongClass = css({
   color: Colors.Secondary,
 });
-const RecipeStrong: React.FC = ({ children }) => (
+const CustomStrong: React.FC = ({ children }) => (
   <strong className={recipeStrongClass}>{children}</strong>
 );
+
+const linkClassName = css({
+  color: Colors.Third,
+  ':active': {
+    color: 'red',
+  },
+});
+const CustomLink: React.FC<React.HTMLProps<HTMLAnchorElement>> = ({
+  href,
+  children,
+  ...rest
+}) => {
+  const parsed = React.useMemo(() => parseUrl(href), [href]);
+  const isOnsite = parsed.url.startsWith('/');
+
+  return isOnsite ? (
+    <Link to={href} className={linkClassName}>{children}</Link>
+  ) : (
+    <a href={href} className={linkClassName} {...rest}>{children}</a>
+  );
+};
 
 const recipeHeaderClass = css({
   color: Colors.Third,
@@ -75,12 +98,17 @@ const makeMarkdownParser = (remarkReactComponents: Record<string, React.Componen
     ) as React.ReactElement;
   };
 
-const RegularMarkdown = makeMarkdownParser({});
+
+const shared: Record<string, React.ComponentType<any>> = {
+  strong: CustomStrong,
+  b: CustomStrong,
+  a: CustomLink,
+};
+const RegularMarkdown = makeMarkdownParser(shared);
 
 export const RecipeMarkdown = makeMarkdownParser({
+  ...shared,
   ol: RecipeOL,
-  strong: RecipeStrong,
-  b: RecipeStrong,
   h1: RecipeHeader,
 });
 

@@ -47,9 +47,25 @@ export interface Recipe {
   link: NamedLink;
   details: Map<string, IRecipeDetail>;
 }
+
+export enum SocialSites {
+  Twitter = 'twitter',
+  GitHub = 'github',
+}
+export interface ISocialLink {
+  url: string;
+  site: SocialSites;
+};
+
+export interface IAuthor {
+  name: string;
+  image: Image;
+  socialLinks: ISocialLink[];
+}
+
 export interface PostDataHeader {
   title: string;
-  author?: string;
+  author?: IAuthor;
   description: string;
   publishDate: Date;
   timeEstimate: number;
