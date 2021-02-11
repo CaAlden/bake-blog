@@ -13,6 +13,13 @@ const KNOWN_DENOMINATORS: number[] = [
 const jankyPlural = (singular: string, plural: string) => (n: number) => n <= 1 ? singular : plural;
 const cups = jankyPlural('cup', 'cups');
 const sticks = jankyPlural('stick', 'sticks');
+export const makeIngredient = (name: string, metric: string, imperial: string): Ingredient => ({
+  name,
+  amount: {
+    [Units.Metric]: metric,
+    [Units.Imperial]: imperial,
+  },
+});
 
 const TOLERANCE = 0.001;
 const fractionDetector = (n: number): [string, string] => {
@@ -71,15 +78,16 @@ export const getEggWhite = (n: number): Ingredient => {
   });
 };
 
-export const getButter = (grams: number): Ingredient => {
+export const getButter = (grams: number, salted: boolean = false): Ingredient => {
   const tbsp = Math.round(grams / 15);
   const [tbspWhole, tbspFract] = fractionDetector(tbsp);
   const nSticks = tbsp / 8;
+  const [stickWhole, stickFraction] = fractionDetector(nSticks);
   const stickable = tbsp % 4 === 0;
-  const imperial = stickable ? `${nSticks} ${sticks(nSticks)}` : `${tbspWhole}${tbspFract} Tbsp`;
+  const imperial = stickable ? `${stickWhole}${stickFraction} ${sticks(nSticks)}` : `${tbspWhole}${tbspFract} Tbsp`;
 
   return ({
-    name: 'Butter',
+    name: `${salted ? 'Salted ' : ''}Butter`,
     amount: {
       [Units.Imperial]: imperial,
       [Units.Metric]: `${grams}g`,
@@ -99,11 +107,11 @@ export const getAllPurposeFlour = (grams: number): Ingredient => {
   });
 }
 
-export const getSugar = (grams: number): Ingredient => {
+export const getSugar = (grams: number, brown: boolean = false): Ingredient => {
   const c = grams / 200;
   const [cupsWhole, cupsFract] = fractionDetector(c);
   return ({
-    name: 'Sugar',
+    name: `${brown ? 'Brown ' : ''}Sugar`,
     amount: {
       [Units.Imperial]: `${cupsWhole}${cupsFract} ${cups(c)}`,
       [Units.Metric]: `${grams}g`,
@@ -111,19 +119,33 @@ export const getSugar = (grams: number): Ingredient => {
   });
 };
 
-export const getSalt = (grams: number): Ingredient => {
-  const teaspoons = grams / 6;
+const calcTspTspb = (grams: number, gramsPerTsp: number) => {
+  const teaspoons = grams / gramsPerTsp;
   const tablespoons = Math.floor(teaspoons / 3);
   const remainder = teaspoons % 3;
   const [tspWhole, tspFract] = fractionDetector(remainder);
-  const imperial = tablespoons < 1 ? `${tspWhole}${tspFract} tsp` :
+  return tablespoons < 1 ? `${tspWhole}${tspFract} tsp` :
     remainder === 0 ? `${tablespoons} Tbsp` : `${tablespoons} Tspb & ${tspWhole}${tspFract} tsp`;
+}
+export const getSalt = (grams: number): Ingredient => {
+  const imperial = calcTspTspb(grams, 6);
 
   return ({
     name: 'Salt',
     amount: {
       [Units.Imperial]: imperial,
-      [Units.Metric]: `${grams}g`,
+      [Units.Metric]: `${imperial} (${grams}g)`,
     }
+  });
+};
+
+export const getBakingSoda = (grams: number): Ingredient => {
+  const imperial = calcTspTspb(grams, 6);
+  return ({
+    name: 'Baking Soda',
+    amount: {
+      [Units.Imperial]: imperial,
+      [Units.Metric]: `${imperial} (${grams}g)`,
+    },
   });
 };
