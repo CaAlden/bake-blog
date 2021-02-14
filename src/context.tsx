@@ -4,6 +4,7 @@ import { parse, stringify } from "query-string";
 import { Units, Ingredient } from "../types";
 import { useHistory } from "react-router-dom";
 import { IConfigContext, IPreferences, useConfigContext } from "./utils/config";
+import { isIngredientMatch } from "./utils/ingredients";
 
 export enum Breakpoint {
   Small = 320,
@@ -95,18 +96,33 @@ export const useUnits = () => {
 
 interface ISelectedIngredientContext {
   ingredient: Ingredient | null;
-  setIngredient: (arg: Ingredient | null | ((i: Ingredient | null) => Ingredient | null)) => void;
+  setIngredient: (arg: string | null | ((i: Ingredient | null) => string | null)) => void;
 }
 const SelectedIngredientContext = React.createContext<ISelectedIngredientContext>({
   ingredient: null,
   setIngredient: () => { console.warn('Setting selected ingredient not supported by root context')},
 });
 export const useSelectedIngredient = () => React.useContext(SelectedIngredientContext);
-export const SelectedIngredientProvider: React.FC = ({ children }) => {
+export const SelectedIngredientProvider: React.FC<{ ingredients: Ingredient[]}> = ({ children, ingredients }) => {
   const [selected, setSelected] = React.useState(null);
+  const setIngredient = (arg: string | null | ((i: Ingredient | null) => string | null)) => {
+    if (typeof arg === 'function') {
+      setSelected((i: Ingredient | null) => {
+        const name = arg(i);
+        if (name) {
+          const match = ingredients.find((allI) => isIngredientMatch(name, allI));
+          return match ?? null;
+        }
+        return null;
+      });
+    } else {
+      const match = arg ? ingredients.find((allI) => isIngredientMatch(arg, allI)) ?? null : null;
+      setSelected(match);
+    }
+  };
   const value = React.useMemo((): ISelectedIngredientContext => ({
     ingredient: selected,
-    setIngredient: setSelected,
+    setIngredient,
   }), [selected, setSelected]);
   return (
     <SelectedIngredientContext.Provider value={value}>

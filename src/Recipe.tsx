@@ -137,9 +137,9 @@ const Ingredients: React.FC<{ ingredients: Ingredient[] }> = ({
           <tr
             style={selected === null || isIngredientMatch(ingredient.name, selected) ? {} : { background: '#888', opacity: '0.7'}}
             key={`${ingredient.name}-${units}`}
-            onMouseEnter={() => setIngredient(ingredient)}
+            onMouseEnter={() => setIngredient(ingredient.name)}
             onMouseOut={() => {
-              setIngredient(i => i?.name === ingredient.name ? null : i);
+              setIngredient(i => i?.name === ingredient.name ? null : i?.name);
             }}
           >
             <td
@@ -231,7 +231,7 @@ export default function Recipe({ data }: IProps) {
       title={data.link.name}
       hero={<HeroImage image={data.link.image} text={data.link.name} />}
     >
-      <SelectedIngredientProvider>
+      <SelectedIngredientProvider ingredients={selectedRecipe.ingredients}>
         <article className={recipeLayoutClass}>
           <div className={recipeMainClass}>
             <section className={articleClass}>

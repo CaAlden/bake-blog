@@ -58,14 +58,28 @@ const recipeStrongClass = css({
   color: Colors.Secondary,
 });
 
-const CustomStrong: React.FC = ({ children }) => {
-  const { ingredient } = useSelectedIngredient();
+const BasicStrong: React.FC = ({ children }) => {
+  return (
+    <strong className={recipeStrongClass}>
+      {children}
+    </strong>
+  );
+}
+
+const RecipeStrong: React.FC = ({ children }) => {
+  const { ingredient, setIngredient } = useSelectedIngredient();
   const isPossibleChildren = Array.isArray(children) && children.length === 1 && typeof children[0] === 'string';
   const isMatch = isPossibleChildren && ingredient !== null && isIngredientMatch(children[0], ingredient);
   return (
     <strong
       className={recipeStrongClass}
       style={isMatch ? { color: ingredient?.color ?? undefined, cursor: 'pointer' } : {}}
+      onMouseEnter={() => isPossibleChildren && setIngredient(children[0])}
+      onMouseOut={() => {
+        if (isPossibleChildren) {
+          setIngredient((i) => i && isIngredientMatch(children[0], i) ? null : i?.name);
+        }
+      }}
     >
       {children}
     </strong>
@@ -114,14 +128,18 @@ const makeMarkdownParser = (remarkReactComponents: Record<string, React.Componen
 
 
 const shared: Record<string, React.ComponentType<any>> = {
-  strong: CustomStrong,
-  b: CustomStrong,
   a: CustomLink,
 };
-const RegularMarkdown = makeMarkdownParser(shared);
+const RegularMarkdown = makeMarkdownParser({
+  ...shared,
+  b: BasicStrong,
+  strong: BasicStrong,
+});
 
 export const RecipeMarkdown = makeMarkdownParser({
   ...shared,
+  strong: RecipeStrong,
+  b: RecipeStrong,
   ol: RecipeOL,
   h1: RecipeHeader,
 });
