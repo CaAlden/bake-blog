@@ -6,6 +6,8 @@ import { css } from '@emotion/css';
 import { Colors } from './Colors';
 import { parseUrl } from 'query-string';
 import { Link } from 'react-router-dom';
+import { useSelectedIngredient } from '../context';
+import { isIngredientMatch } from './ingredients';
 
 interface IProps {
   markdown: string;
@@ -55,9 +57,20 @@ const RecipeOL: React.FC = ({ children }) => (
 const recipeStrongClass = css({
   color: Colors.Secondary,
 });
-const CustomStrong: React.FC = ({ children }) => (
-  <strong className={recipeStrongClass}>{children}</strong>
-);
+
+const CustomStrong: React.FC = ({ children }) => {
+  const { ingredient } = useSelectedIngredient();
+  const isPossibleChildren = Array.isArray(children) && children.length === 1 && typeof children[0] === 'string';
+  const isMatch = isPossibleChildren && ingredient !== null && isIngredientMatch(children[0], ingredient);
+  return (
+    <strong
+      className={recipeStrongClass}
+      style={isMatch ? { color: ingredient?.color ?? undefined, cursor: 'pointer' } : {}}
+    >
+      {children}
+    </strong>
+  );
+};
 
 const linkClassName = css({
   color: Colors.Third,
@@ -90,6 +103,7 @@ const RecipeHeader: React.FC = ({ children }) => (
 
 const makeMarkdownParser = (remarkReactComponents: Record<string, React.ComponentType<any>>) =>
   (props: IProps): React.ReactElement => {
+    const { ingredient } = useSelectedIngredient();
     return (
       unified()
       .use(parse)

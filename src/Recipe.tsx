@@ -7,11 +7,12 @@ import {
   IRecipeDetail,
   Ingredient,
 } from "../types";
-import { Breakpoint, useBreakpoint, useUnits } from "./context";
+import { Breakpoint, SelectedIngredientProvider, useBreakpoint, useSelectedIngredient, useUnits } from "./context";
 import HeroImage from "./layout/HeroImage";
 import PageLayout from "./layout/PageLayout";
 import { RecipeMarkdown as Markdown } from "./utils/Markdown";
 import { useQueryContext } from "./context";
+import { isIngredientMatch } from "./utils/ingredients";
 
 const sliderContainerClass = css({
   flexGrow: 1,
@@ -115,13 +116,15 @@ const tableHeaderCellClass = css({
   color: "white",
   background: "black",
 });
-const tableCellClass = css({
+const getTableCellClass = css({
   padding: "10px",
   border: "1px solid black",
+  cursor: 'pointer',
 });
 const Ingredients: React.FC<{ ingredients: Ingredient[] }> = ({
   ingredients,
 }) => {
+  const { ingredient: selected, setIngredient } = useSelectedIngredient();
   const [units] = useUnits();
   return (
     <table className={tableClass}>
@@ -131,9 +134,21 @@ const Ingredients: React.FC<{ ingredients: Ingredient[] }> = ({
           <td className={tableHeaderCellClass}>Amount</td>
         </tr>
         {ingredients.map((ingredient) => (
-          <tr key={`${ingredient.name}-${units}`}>
-            <td className={tableCellClass}>{ingredient.name}</td>
-            <td className={tableCellClass}>{ingredient.amount[units]}</td>
+          <tr
+            style={selected === null || isIngredientMatch(ingredient.name, selected) ? {} : { background: '#888', opacity: '0.7'}}
+            key={`${ingredient.name}-${units}`}
+            onMouseEnter={() => setIngredient(ingredient)}
+            onMouseOut={() => {
+              setIngredient(i => i?.name === ingredient.name ? null : i);
+            }}
+          >
+            <td
+              className={getTableCellClass}
+              style={selected && isIngredientMatch(ingredient.name, selected) ? { color: selected.color } : {}}
+            >
+              {ingredient.name}
+            </td>
+            <td className={getTableCellClass}>{ingredient.amount[units]}</td>
           </tr>
         ))}
       </tbody>
@@ -216,21 +231,23 @@ export default function Recipe({ data }: IProps) {
       title={data.link.name}
       hero={<HeroImage image={data.link.image} text={data.link.name} />}
     >
-      <article className={recipeLayoutClass}>
-        <div className={recipeMainClass}>
-          <section className={articleClass}>
-            <Markdown markdown={selectedRecipe.steps[units]} />
-          </section>
-          <div className={recipeSidebarClass(breakpoint)}>
-            <Parameters
-              parameters={data.parameters}
-              settings={settings}
-              updateSettings={updateSettings}
-            />
-            <Ingredients ingredients={selectedRecipe.ingredients} />
+      <SelectedIngredientProvider>
+        <article className={recipeLayoutClass}>
+          <div className={recipeMainClass}>
+            <section className={articleClass}>
+              <Markdown markdown={selectedRecipe.steps[units]} />
+            </section>
+            <div className={recipeSidebarClass(breakpoint)}>
+              <Parameters
+                parameters={data.parameters}
+                settings={settings}
+                updateSettings={updateSettings}
+              />
+              <Ingredients ingredients={selectedRecipe.ingredients} />
+            </div>
           </div>
-        </div>
-      </article>
+        </article>
+      </SelectedIngredientProvider>
     </PageLayout>
   );
 }

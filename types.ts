@@ -30,6 +30,8 @@ export interface Parameter {
 
 export interface Ingredient {
   name: string;
+  aliases?: string[];
+  color: string;
   amount: {[U in Units]: string };
 }
 

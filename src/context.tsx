@@ -1,7 +1,7 @@
 import * as React from "react";
 import useResizeObserver from "@react-hook/resize-observer";
 import { parse, stringify } from "query-string";
-import { Units } from "../types";
+import { Units, Ingredient } from "../types";
 import { useHistory } from "react-router-dom";
 import { IConfigContext, IPreferences, useConfigContext } from "./utils/config";
 
@@ -91,4 +91,26 @@ export const useUnits = () => {
   const { config, setConfig } = useConfig();
   const setUnits = (units: Units) => setConfig({ ...config, units });
   return [config.units, setUnits] as const;
+};
+
+interface ISelectedIngredientContext {
+  ingredient: Ingredient | null;
+  setIngredient: (arg: Ingredient | null | ((i: Ingredient | null) => Ingredient | null)) => void;
+}
+const SelectedIngredientContext = React.createContext<ISelectedIngredientContext>({
+  ingredient: null,
+  setIngredient: () => { console.warn('Setting selected ingredient not supported by root context')},
+});
+export const useSelectedIngredient = () => React.useContext(SelectedIngredientContext);
+export const SelectedIngredientProvider: React.FC = ({ children }) => {
+  const [selected, setSelected] = React.useState(null);
+  const value = React.useMemo((): ISelectedIngredientContext => ({
+    ingredient: selected,
+    setIngredient: setSelected,
+  }), [selected, setSelected]);
+  return (
+    <SelectedIngredientContext.Provider value={value}>
+      {children}
+    </SelectedIngredientContext.Provider>
+  );
 };

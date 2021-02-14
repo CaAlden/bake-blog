@@ -1,8 +1,9 @@
 import { Units, Recipe, Difficulty, Image, Ingredient } from "../../../types";
-import { getAllPurposeFlour, getBakingSoda, getButter, getEggs, getEggWhite, getSugar, getYolk, makeIngredient } from "../../utils/ingredients";
+import { getAllPurposeFlour, getBakingSoda, getButter, getEggs, getEggWhite, getSugar, getBrownSugar, getYolk, makeIngredient } from "../../utils/ingredients";
 import HeroLarge from "../../../assets/img/placeholder_large.webp";
 import HeroMedium from "../../../assets/img/placeholder_medium.webp";
 import HeroSmall from "../../../assets/img/placeholder_small.webp";
+import { EXTRAS_COLOR } from "../../utils/Colors";
 
 const heroImage: Image = {
   large: HeroLarge,
@@ -62,13 +63,13 @@ we found that these were best straight out of the oven.
 const getIgs = (eggIngredients: Ingredient[]): Ingredient[] => [
   getButter(175, true),
   getSugar(150),
-  getSugar(150, true),
+  getBrownSugar(150),
   ...eggIngredients,
   getAllPurposeFlour(280),
   getBakingSoda(3),
-  makeIngredient('Vanilla Extract', '2tsp (8.4g)', '2 tsp'),
-  makeIngredient('Chocolate Chips', '270g', '1 & 1/2 cups'),
-  makeIngredient('Chopped Walnuts', '125g', '1 cup'),
+  makeIngredient('Vanilla Extract', '2tsp (8.4g)', '2 tsp', EXTRAS_COLOR, []),
+  makeIngredient('Chocolate Chips', '270g', '1 & 1/2 cups', EXTRAS_COLOR, []),
+  makeIngredient('Chopped Walnuts', '125g', '1 cup', EXTRAS_COLOR, ['walnuts']),
 ];
 const chocolateChip: Recipe = {
   link: {
