@@ -26,10 +26,12 @@ const recipeOlClass = css({
     display: 'block',
     position: 'relative',
     counterIncrement: 'inst',
+    lineHeight: '1.5',
   },
   ' > li::before': {
     content: 'counter(inst)',
 
+    lineHeight: '1.1',
     background: Colors.Third,
     color: '#fff',
 

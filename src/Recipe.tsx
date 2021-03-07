@@ -21,11 +21,20 @@ const sliderContainerClass = css({
   display: "flex",
   maxWidth: '500px',
   minWidth: '310px',
+  border: '1px solid black',
+  paddingBottom: '5px',
+  marginBottom: '10px',
+});
+const nameClass = css({
+  padding: '10px',
+  background: '#eee',
+  fontWeight: 'bold',
 });
 const optionsClass = css({
   display: "flex",
   justifyContent: "space-between",
   flexGrow: 1,
+  padding: '5px',
 });
 const labelClass = css({
   cursor: "pointer",
@@ -43,6 +52,7 @@ const ParameterRange: React.FC<{
 }> = ({ parameter, current, updateSetting }) => {
   return parameter.settings.length > 1 ? (
     <div className={sliderContainerClass}>
+      <span className={nameClass}>{parameter.name}</span>
       <div className={optionsClass}>
         {parameter.settings.map((s) => (
           <span
