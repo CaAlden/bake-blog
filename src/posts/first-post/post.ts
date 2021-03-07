@@ -51,7 +51,7 @@ Okay so, let's take a look at our notes for each fo the specific bakes! We disco
 
 --------------------
 
-#### Low Flour - Low Sugar - [recipe](/recipes/sugar-cookies?form="Low"&sweet="Low")
+#### Low Flour - Low Sugar - [recipe](/recipes/sugar-cookies?Composure="Low"&Sweetness="Low")
 
 The day of the bake, this cookie was one of the worst. The low amount of flour and sugar meant that the cookie was essentially all butter. When the butter was still warm, the cookie had virtually no form. The day after and again a week later, the cookie performed better. The butter had resolidified and came through. Unfortunately the low sugar content meant the cookie didn't taste like much of anything.
 
@@ -59,7 +59,7 @@ The day of the bake, this cookie was one of the worst. The low amount of flour a
 
 --------------------
 
-#### Low Flour - Medium Sugar - [recipe](/recipes/sugar-cookies?form="Low"&sweet="Medium")
+#### Low Flour - Medium Sugar - [recipe](/recipes/sugar-cookies?Composure="Low"&Sweetness="Medium")
 
 This cookie ended up spreading out and being a bit chewier the day of. This cookie tasted better on the second day and a week later which I attribute to the solidification of the butter. The medium amount of sugar meant that this one tasted a bit better and by the 1 week mark it had solidified some from becoming a bit stale to the point that it would've been a very good tea cookie.
 
@@ -67,7 +67,7 @@ This cookie ended up spreading out and being a bit chewier the day of. This cook
 
 --------------------
 
-#### Low Flour - High Sugar - [recipe](/recipes/sugar-cookies?form="Low"&sweet="High")
+#### Low Flour - High Sugar - [recipe](/recipes/sugar-cookies?Composure="Low"&Sweetness="High")
 
 Now we arrive at an interesting cookie. The low flour meant that this cookie spread out super thin in the oven and the high sugar content partially caramelized. This cookie was crunchy and delicious on all three tasting attempts and was both Sara and my favorite of the whole batch. With that said, this cookie wasn't exactly a "sugar cookie". The low form and crunchiness pushed it all the way into some other cookie category. We either invented a new type of cookie or rediscovered some type of snickerdoodle.
 
@@ -75,7 +75,7 @@ Now we arrive at an interesting cookie. The low flour meant that this cookie spr
 
 --------------------
 
-#### Medium Flour - Low Sugar - [recipe](/recipes/sugar-cookies?form="Medium"&sweet="Low")
+#### Medium Flour - Low Sugar - [recipe](/recipes/sugar-cookies?Composure="Medium"&Sweetness="Low")
 
 This cookie had more form than the low flour cookies. The taste was decent when they were fresh out of the oven. We both felt that it would be a good tea cookie, but it wasn't very sweet and as such didn't leave much of an impression. It would be a good vehicle for super sweet icings for example since it won't push the sweetness over the top. My notes for this cookie say that it wasn't very good the next day, but then was back up towards the top of the cookies we made when I taste tested it a week later.
 
@@ -83,7 +83,7 @@ This cookie had more form than the low flour cookies. The taste was decent when 
 
 --------------------
 
-#### Medium Flour - Medium Sugar - [recipe](/recipes/sugar-cookies?form="Medium"&sweet="Medium")
+#### Medium Flour - Medium Sugar - [recipe](/recipes/sugar-cookies?Composure="Medium"&Sweetness="Medium")
 
 This was our absolutely average sugar cookie recipe. It ended up being a very good cookie though, so maybe the recipes we sourced were circling around something good after all. It wasn't an exciting cookie, but it was certainly unoffensive and would be really good in a setting where you are looking for a stand-alone cookie that isn't overly sweet. If you wanted to use sweet toppings or just to eat something with tea, this is a strong choice.
 
@@ -91,7 +91,7 @@ This was our absolutely average sugar cookie recipe. It ended up being a very go
 
 --------------------
 
-#### Medium Flour - High Sugar - [recipe](/recipes/sugar-cookies?form="Medium"&sweet="High")
+#### Medium Flour - High Sugar - [recipe](/recipes/sugar-cookies?Composure="Medium"&Sweetness="High")
 
 All of the notes on this cookie were essentially the same as the **Medium Flour - Medium Sugar** with the note that it was sweeter. With no toppings or accompaniment, these cookies slightly edged out the medium-medium ones. If you intended to add a sweet topping, the sweetness might be overpowering.
 
@@ -99,7 +99,7 @@ All of the notes on this cookie were essentially the same as the **Medium Flour 
 
 --------------------
 
-#### High Flour - Low Sugar - [recipe](/recipes/sugar-cookies?form="High"&sweet="Low")
+#### High Flour - Low Sugar - [recipe](/recipes/sugar-cookies?Composure="High"&Sweetness="Low")
 
 Now we reach the zone of "is this even edible". I begrudingly grant it that title, but this cookie was unpleasent. Fresh out of the over, both Sara and I barely managed to eat even a small bite from this cookie. The high ratio of flour meant that the cookie turned into a paste as soon as you tried to eat it. Particularly fresh out of the oven when the butter didn't have a chance to solidify, this cookie turned into mush. On later tastings, it improved some, but the low sugar content meant that the cookie was never particularly pleasent. The one positive thing I can say is that it held it shape very well. If form is all that matters, and you're out of sugar then I suppose you could make this cookie.
 
@@ -107,7 +107,7 @@ Now we reach the zone of "is this even edible". I begrudingly grant it that titl
 
 --------------------
 
-#### High Flour - Medium Sugar - [recipe](/recipes/sugar-cookies?form="High"&sweet="Medium")
+#### High Flour - Medium Sugar - [recipe](/recipes/sugar-cookies?Composure="High"&Sweetness="Medium")
 
 This one was also not particularly pleasent. It tasted slightly better but was ultimately not very flavorful. An uncooked flour flavor persisted through the bake which was not ideal flavor-wise. It did hold it's shape as well, but was otherwise unremarkable.
 
@@ -115,7 +115,7 @@ This one was also not particularly pleasent. It tasted slightly better but was u
 
 --------------------
 
-#### High Flour - High Sugar - [recipe](/recipes/sugar-cookies?form="High"&sweet="High")
+#### High Flour - High Sugar - [recipe](/recipes/sugar-cookies?Composure="High"&Sweetness="High")
 
 As far as the high flour content cookies go, this one is the best, but I would still put it in the bottom half of the pack on the whole. If the form is all that matters I recommend this cookie, since it held its shape better than the lower flour content cookies and didn't taste _horrible_. On successive taste tests, the overall experience improved. In most respects, I would suggest making one of the other cookies over this one unless the shape holding is very important.
 
