@@ -1,8 +1,8 @@
 import { Units, Recipe, Difficulty, Image, Ingredient } from "../../../types";
 import { getAllPurposeFlour, getBakingSoda, getButter, getEggs, getEggWhite, getSugar, getBrownSugar, getYolk, makeIngredient } from "../../utils/ingredients";
-import HeroLarge from "../../../assets/img/placeholder_large.webp";
-import HeroMedium from "../../../assets/img/placeholder_medium.webp";
-import HeroSmall from "../../../assets/img/placeholder_small.webp";
+import HeroLarge from "../../../assets/img/2021-2-28-chocolate-chip-cookies/chocolate-chip-cookie-hero_large.webp";
+import HeroMedium from "../../../assets/img/2021-2-28-chocolate-chip-cookies/chocolate-chip-cookie-hero_medium.webp";
+import HeroSmall from "../../../assets/img/2021-2-28-chocolate-chip-cookies/chocolate-chip-cookie-hero_small.webp";
 import { EXTRAS_COLOR } from "../../utils/Colors";
 
 const heroImage: Image = {

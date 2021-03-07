@@ -1,13 +1,15 @@
 import * as React from 'react';
 import unified from 'unified'
 import parse from 'remark-parse'
+import gfm from 'remark-gfm';
 import remark2react from 'remark-react'
 import { css } from '@emotion/css';
 import { Colors } from './Colors';
 import { parseUrl } from 'query-string';
 import { Link } from 'react-router-dom';
-import { useSelectedIngredient } from '../context';
+import { useSelectedIngredient, useUnits } from '../context';
 import { isIngredientMatch } from './ingredients';
+import { Units } from '../../types';
 
 interface IProps {
   markdown: string;
@@ -97,9 +99,15 @@ const CustomLink: React.FC<React.HTMLProps<HTMLAnchorElement>> = ({
   children,
   ...rest
 }) => {
-  const parsed = React.useMemo(() => parseUrl(href), [href]);
-  const isOnsite = parsed.url.startsWith('/');
+  const isUnitHack = href === '#units';
+  const parsed = React.useMemo(() => !isUnitHack ? parseUrl(href) : { url: ''}, [href]);
+  const [units] = useUnits();
+  if (isUnitHack && typeof children[0] === 'string') {
+    const [metric, imperial] = children[0].split('|');
+    return <>{units === Units.Metric ? metric : imperial}</>;
+  }
 
+  const isOnsite = parsed.url.startsWith('/');
   return isOnsite ? (
     <Link to={href} className={linkClassName}>{children}</Link>
   ) : (
@@ -121,6 +129,7 @@ const makeMarkdownParser = (remarkReactComponents: Record<string, React.Componen
     return (
       unified()
       .use(parse)
+      .use(gfm)
       .use(remark2react, { remarkReactComponents })
       .processSync(props.markdown).result
     ) as React.ReactElement;
@@ -129,6 +138,8 @@ const makeMarkdownParser = (remarkReactComponents: Record<string, React.Componen
 
 const shared: Record<string, React.ComponentType<any>> = {
   a: CustomLink,
+  hr: () => <hr style={{ border: '1px solid black', width: '100%'}} />,
+  em: ({ children }: { children: React.ReactNode }) => <em style={{ marginRight: '0.2em' }}>{children}</em>,
 };
 const RegularMarkdown = makeMarkdownParser({
   ...shared,
