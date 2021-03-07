@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import { useSelectedIngredient, useUnits } from '../context';
 import { isIngredientMatch } from './ingredients';
 import { Units } from '../../types';
+import { Table, TableCell, TableHeader, TableRow } from './Table';
 
 interface IProps {
   markdown: string;
@@ -141,10 +142,15 @@ const shared: Record<string, React.ComponentType<any>> = {
   hr: () => <hr style={{ border: '1px solid black', width: '100%'}} />,
   em: ({ children }: { children: React.ReactNode }) => <em style={{ marginRight: '0.2em' }}>{children}</em>,
 };
+
 const RegularMarkdown = makeMarkdownParser({
   ...shared,
   b: BasicStrong,
   strong: BasicStrong,
+  table: Table,
+  td: TableCell,
+  tr: TableRow,
+  th: TableHeader,
 });
 
 export const RecipeMarkdown = makeMarkdownParser({
