@@ -63,7 +63,7 @@ export const QueryProvider: React.FC = ({ children }) => {
       value={{
         query,
         setQuery: (q) => {
-          history.push({ search: stringify(q) });
+          history.replace({ search: stringify(q) });
         },
       }}
     >

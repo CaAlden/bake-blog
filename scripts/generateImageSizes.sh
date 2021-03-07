@@ -10,4 +10,4 @@ echo "converting $1.png to 50% size"
 convert -resize 50% "$1.png" "$1_medium.webp"
 
 echo "converting $1.png to 25% size"
-convert -resize 25% "$1.png" "$1_small.webp"
+convert -resize 10% "$1.png" "$1_small.png"

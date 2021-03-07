@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useRouteMatch } from 'react-router-dom';
 import { IAuthor, ISocialLink, PostData } from '../types';
 import Markdown from './utils/Markdown';
 import { Breakpoint, useBreakpoint, useUnits } from './context';
 import PageLayout from './layout/PageLayout';
 import HeroImage from './layout/HeroImage';
 import { css } from '@emotion/css';
+import { getFullHref } from './utils/header';
 
 const SocialLink: React.FC<{ link: ISocialLink }> = ({ link }) => {
   return (
@@ -67,7 +68,10 @@ interface IProps {
 
 const getPostLayoutClass = (breakpoint: Breakpoint) => css({
   display: 'grid',
+  justifyContent: 'center',
   gridTemplateRows: breakpoint === Breakpoint.Small ? '180px' : '100px',
+  paddingLeft: breakpoint === Breakpoint.Large ? '10%' : '0',
+  paddingRight: breakpoint === Breakpoint.Large ? '10%' : '0',
   paddingTop: '10px',
   gridAutoRows: '1fr',
   flexGrow: 1,
@@ -115,7 +119,14 @@ export default function Post({ data }: IProps) {
   return (
     <PageLayout
       title={data.title}
-      hero={<HeroImage text={data.title} image={data.articleLink.image} />}
+      hero={<HeroImage text={data.title} image={data.image} />}
+      meta={{
+        type: 'article',
+        creator: data.author?.twitterHandle,
+        description: data.description,
+        image: getFullHref(data.articleLink.image.large),
+        card: 'summary_large_image',
+      }}
     >
       <article className={getPostLayoutClass(breakpoint)}>
         <div className={frontMatterClass}>

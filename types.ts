@@ -62,12 +62,14 @@ export interface ISocialLink {
 export interface IAuthor {
   name: string;
   image: Image;
+  twitterHandle?: string;
   socialLinks: ISocialLink[];
 }
 
 export interface PostDataHeader {
   title: string;
   author?: IAuthor;
+  image: Image;
   description: string;
   publishDate: Date;
   timeEstimate: number;

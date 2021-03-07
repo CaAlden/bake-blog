@@ -3,8 +3,11 @@ import { css } from '@emotion/css';
 import Header from './Header';
 import { Colors } from '../utils/Colors';
 import { Breakpoint, breakpointCases, useBreakpoint } from '../context';
+import { getFullHref, MetaData, setHeadTags } from '../utils/header';
+import { useRouteMatch } from 'react-router-dom';
 
 interface IProps {
+  meta?: Partial<Omit<MetaData, 'title' | 'site_name'>>;
   title: string;
   hero?: React.ReactNode;
 }
@@ -36,14 +39,23 @@ const getContentClassName = (breakpoint: Breakpoint) => css({
   padding: breakpointPadding(breakpoint),
 });
 
+export const DEFAULT_META: Partial<MetaData> = {
+  title: 'The Bake Lab',
+  description: 'Recipes and Blog posts about baking driven by scientific research and experimentation',
+  type: 'website',
+  card: 'summary',
+  creator: '@souperman527',
+};
 const PageLayout: React.FC<IProps> = ({
   title,
   hero,
   children,
+  meta = DEFAULT_META,
 }) => {
+  const path = useRouteMatch();
   React.useEffect(() => {
-    document.title = title;
-  }, [title]);
+    setHeadTags({ url: getFullHref(path.url), ...meta, title, site_name: 'The Bake Lab' });
+  }, [title, meta]);
   const breakpoint = useBreakpoint();
 
   return (

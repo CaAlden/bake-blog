@@ -63,7 +63,7 @@ const Header = () => {
   return (
     <header className={getHeaderClass(matchedColor)}>
       <Link to="/" className={headerLinkClass}>
-        <h1 className={getTitleClass(breakpoint)}>Bake Blog</h1>
+        <h1 className={getTitleClass(breakpoint)}>The Bake Lab</h1>
       </Link>
       <div style={{ display: 'flex' }}>
         <Navigation items={NavigationLinks} />

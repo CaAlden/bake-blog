@@ -34,10 +34,10 @@ const getImageClass = (url: string) => css({
   backgroundPosition: 'center',
   backgroundRepeat: 'no-repeat',
   position: "absolute",
-  right: "calc(50% - 116px)",
+  right: "calc(50% - 125px)",
   top: "-50px",
-  height: "225px",
-  width: "225px",
+  height: "250px",
+  width: "250px",
   borderRadius: "50%",
   padding: "5px",
   border: "2px solid rgba(0,0,0, 0.1)",
@@ -49,7 +49,7 @@ const CardTop: React.FC<{ image: Image, link: NamedLink }> = ({ image, link }) =
   return (
     <Link to={link.url}>
       <div className={cardTopContainerClass}>
-        <img className={getImageClass(link.image.small ?? link.image.medium ?? link.image.large )} />
+        <div className={getImageClass(link.image.small ?? link.image.medium ?? link.image.large )} />
       </div>
     </Link>
   );

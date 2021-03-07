@@ -49,7 +49,7 @@ const HeroTitle: React.FC = () => {
         </svg>
       </div>
       <div className={overlayClass} />
-      <h1 className={titleClassName}>Bake Blog</h1>
+      <h1 className={titleClassName}>The Bake Lab</h1>
     </section>
   );
 };
@@ -102,7 +102,7 @@ const Homepage: React.FC<IProps> = ({
 }) => {
   return (
     <PageLayout
-      title="Bake Blog"
+      title="The Bake Lab"
       hero={<HeroTitle />}
     >
       <PostCards posts={posts} />

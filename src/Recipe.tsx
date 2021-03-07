@@ -13,6 +13,7 @@ import PageLayout from "./layout/PageLayout";
 import { RecipeMarkdown as Markdown } from "./utils/Markdown";
 import { useQueryContext } from "./context";
 import { isIngredientMatch } from "./utils/ingredients";
+import { getFullHref } from "./utils/header";
 
 const sliderContainerClass = css({
   flexGrow: 1,
@@ -230,6 +231,13 @@ export default function Recipe({ data }: IProps) {
     <PageLayout
       title={data.link.name}
       hero={<HeroImage image={data.link.image} text={data.link.name} />}
+      meta={{
+        type: 'article',
+        url: getFullHref(data.link.url),
+        description: data.description,
+        image: getFullHref(data.link.image.large),
+        card: 'summary_large_image',
+      }}
     >
       <SelectedIngredientProvider ingredients={selectedRecipe.ingredients}>
         <article className={recipeLayoutClass}>
