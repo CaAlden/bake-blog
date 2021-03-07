@@ -25,7 +25,7 @@ export const Table: React.FC = ({ children }) => {
 
   return (
     <HeaderProvider value={{ value: headerValues, setValue }}>
-      <table>
+      <table className="table">
         {children}
       </table>
     </HeaderProvider>
