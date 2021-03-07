@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "parcel run ./index.html",
-    "build": "parcel build ./index.html",
+    "build": "parcel build ./index.html --no-source-maps --out-dir ./docs",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
