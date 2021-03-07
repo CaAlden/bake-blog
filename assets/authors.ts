@@ -2,6 +2,7 @@ import CampbellProfileLarge from './img/profile.jpeg';
 import { IAuthor, SocialSites } from '../types';
 export const CampbellAuthor: IAuthor = {
   name: "Campbell Alden",
+  twitterHandle: '@souperman527',
   image: {
     large: CampbellProfileLarge,
   },
