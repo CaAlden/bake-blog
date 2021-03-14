@@ -5,7 +5,7 @@ import { Colors } from '../utils/Colors';
 
 const childClass = css({
   display: 'flex',
-  padding: '15px 0',
+  padding: '15px',
   justifyContent: 'center',
   alignItems: 'center',
   background: Colors.White,
@@ -14,8 +14,8 @@ const container = css({
   display: 'flex',
   flexGrow: 1,
   flexWrap: 'wrap',
-  gap: '30px',
   alignItems: 'center',
+  padding: '15px 0',
   justifyContent: 'center',
 });
 
@@ -25,7 +25,10 @@ const ListLayout: React.FC = ({
   const breakpoint = useBreakpoint();
   return (
     <div className={container}>{
-      React.Children.map(children, (node, idx) => <div className={childClass} key={idx}>{node}</div>)
+      React.Children.map(
+        children,
+        (node, idx) => <div className={childClass} key={idx}>{node}</div>,
+      )
     }</div>
   );
 }

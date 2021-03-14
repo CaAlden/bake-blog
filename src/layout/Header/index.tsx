@@ -14,7 +14,6 @@ const NavigationLinks = [
 const getHeaderClass = (color: string) => css({
   display: 'flex',
   flexWrap: 'wrap',
-  gap: '25px',
   justifyContent: 'stretch',
   background: color,
   color: Colors.White,
@@ -47,6 +46,7 @@ const getUnitsContainerClass = (breakpoint: Breakpoint) => css({
   display: 'flex',
   flexGrow: breakpoint === Breakpoint.Small ? 1 : 0,
   justifyContent: 'center',
+  paddingLeft: '25px',
   alignItems: 'center',
 });
 
@@ -65,7 +65,7 @@ const Header = () => {
       <Link to="/" className={headerLinkClass}>
         <h1 className={getTitleClass(breakpoint)}>The Bake Lab</h1>
       </Link>
-      <div style={{ display: 'flex' }}>
+      <div style={{ display: 'flex', paddingLeft: '25px' }}>
         <Navigation items={NavigationLinks} />
       </div>
       <div className={getUnitsContainerClass(breakpoint)}>

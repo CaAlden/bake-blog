@@ -173,7 +173,6 @@ interface IProps {
 
 const recipeLayoutClass = css({
   display: "grid",
-  gap: "10px",
   paddingTop: '20px',
   gridAutoRows: "1fr",
   flexGrow: 1,
@@ -183,7 +182,7 @@ const recipeMainClass = css({
   display: "flex",
   flexWrap: "wrap-reverse",
   flexGrow: 1,
-  gap: '15px',
+  padding: "10px",
 });
 
 const recipeSidebarClass = (breakpoint: Breakpoint) => css({
@@ -192,6 +191,7 @@ const recipeSidebarClass = (breakpoint: Breakpoint) => css({
   flexGrow: 1,
   justifyContent: breakpoint === Breakpoint.Large ? 'flex-start': 'center',
   flexBasis: "310px",
+  padding: '15px',
 });
 const articleClass = css({
   flexGrow: 3,

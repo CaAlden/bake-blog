@@ -82,7 +82,6 @@ const cardListClass = css({
   display: 'flex',
   justifyContent: 'center',
   flexWrap: 'wrap',
-  gap: '30px',
 });
 
 const PostCards: React.FC<IProps> = ({ posts }) => {
@@ -90,7 +89,15 @@ const PostCards: React.FC<IProps> = ({ posts }) => {
   return (
     <section className={cardListClass}>
       {taggedPostData.map(post =>
-        post.type === 'post' ? <PostCard key={post.props.postLink.name} {...post.props} /> : <RecipeCard key={post.props.recipeLink.name} {...post.props} />
+        post.type === 'post' ? (
+          <div key={post.props.postLink.name} style={{ padding: '15px'}}>
+            <PostCard  {...post.props} />
+          </div>
+        ) : (
+          <div key={post.props.recipeLink.name} style={{ padding: '15px'}}>
+            <RecipeCard {...post.props} />
+          </div>
+        )
       )}
     </section>
   );

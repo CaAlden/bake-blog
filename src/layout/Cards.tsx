@@ -101,14 +101,13 @@ const cardContentsContainerClass = css({
   display: "grid",
   gridTemplateRows: "1.5fr 1.5fr 1fr",
   flexGrow: 1,
-  gap: "5px",
 });
 const titleSectionClass = css({
   color: Colors.Secondary,
   display: "flex",
-  gap: "5px",
   justifyContent: "space-between",
   alignItems: "center",
+  paddingBottom: '5px',
 });
 const dateClass = css({
   color: "gray",
@@ -120,15 +119,16 @@ const paragraphClass = css({
   fontSize: "0.8em",
   display: "flex",
   alignItems: "center",
+  paddingBottom: '5px',
 });
 const footerClass = css({
   display: "flex",
   alignItems: "center",
-  gap: "5px",
   fontSize: "0.8em",
 });
 const detailLabelClass = css({
   fontWeight: "bold",
+  paddingRight: '5px',
 });
 
 const RecipeContent: React.FC<IRecipeCardProps> = ({

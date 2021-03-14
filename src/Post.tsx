@@ -19,27 +19,26 @@ const getAvatarContainerClass = (breakpoint: Breakpoint) => css({
   alignItems: 'center',
   justifyContent: breakpoint === Breakpoint.Small ? 'center' : 'flex-start',
   flexGrow: 1,
-  gap: '20px',
 });
 const imageClass = css({
   height: '75px',
   width: '75px',
   borderRadius: '75px',
+  paddingRight: '10px',
 });
 const infoAsideClass = css({
   display: 'flex',
   flexDirection: 'column',
-  gap: '10px',
 });
 const nameClass = css({
   display: 'inline-flex',
   flexGrow: 1,
+  paddingBottom: '10px',
 });
 const socialLinksContainer = css({
   display: 'inline-flex',
   alignItems: 'center',
   flexGrow: 1,
-  gap: '10px',
 });
 const AuthorAvatar: React.FC<IAuthor> = ({
   name,
@@ -54,7 +53,8 @@ const AuthorAvatar: React.FC<IAuthor> = ({
         <span className={nameClass}>{name}</span>
         {socialLinks.length > 0 &&
           <div className={socialLinksContainer}>{
-            socialLinks.map(sl => <SocialLink key={sl.site} link={sl} />)
+          socialLinks.map(
+            sl => <div key={sl.site} style={{ paddingRight: '10px' }}><SocialLink key={sl.site} link={sl} /></div>)
           }</div>
         }
       </div>
@@ -81,7 +81,6 @@ const frontMatterClass = css({
   alignItems: 'center',
   justifyContent: 'space-between',
   flexWrap: 'wrap',
-  gap: '10px',
   padding: '0 10px',
 });
 
@@ -93,10 +92,10 @@ const articleClass = css({
 });
 const dateClass = css({
   fontWeight: "lighter",
+  paddingBottom: '10px',
 });
 const getPostInfoAside = (breakpoint: Breakpoint) => css({
   display: 'flex',
-  gap: '10px',
   flexGrow: 1,
   flexDirection: 'column',
   alignItems: breakpoint === Breakpoint.Small ? 'center' : 'flex-end',
