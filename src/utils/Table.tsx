@@ -5,6 +5,7 @@ interface IHeaderContext {
   value: Map<number, string>;
   setValue: (index: number, str: string) => void;
 }
+
 const headerRefContext = React.createContext<IHeaderContext>({ value: new Map(), setValue: () => {}})
 const HeaderProvider = headerRefContext.Provider;
 
@@ -18,10 +19,13 @@ const useHeaderValue = () => {
 }
 
 export const Table: React.FC = ({ children }) => {
-  const [headerValues] = React.useState(new Map<number, string>());
+  const mapRef = React.useRef(new Map<number, string>());
+  const [headerValues, setHeaderValues] = React.useState(mapRef.current);
   const setValue = (i: number, val: string) => {
-    headerValues.set(i, val);
+    mapRef.current.set(i, val);
+    setHeaderValues(new Map(mapRef.current));
   };
+
 
   return (
     <HeaderProvider value={{ value: headerValues, setValue }}>

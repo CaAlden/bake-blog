@@ -13,10 +13,6 @@ const heroImageClass = css({
   backgroundAttachment: 'fixed',
   backgroundPosition: 'center',
   backgroundSize: 'cover',
-  '-moz-background-size': 'cover',
-  '-webkit-background-size': 'cover',
-  '-o-background-size': 'cover',
-
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
