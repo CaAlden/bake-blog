@@ -28,7 +28,7 @@ const titleContainerClass = css({
 });
 const titleClassName = css({
   textAlign: 'center',
-  fontSize: '5em',
+  fontSize: 'calc(3em + 3vw)',
   zIndex: 2,
   color: '#fff',
   background: '#000',
