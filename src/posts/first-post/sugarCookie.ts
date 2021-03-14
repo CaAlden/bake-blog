@@ -1,8 +1,8 @@
 import { Units, Recipe, Difficulty, Image, IRecipeDetail } from "../../../types";
 import { getAllPurposeFlour, getButter, getEggs, getEggWhite, getSugar, getYolk } from "../../utils/ingredients";
-import HeroLarge from "../../../assets/img/placeholder_large.webp";
-import HeroMedium from "../../../assets/img/placeholder_medium.webp";
-import HeroSmall from "../../../assets/img/placeholder_small.webp";
+import HeroLarge from "../../../assets/img/placeholder_large.jpeg";
+import HeroMedium from "../../../assets/img/placeholder_medium.jpeg";
+import HeroSmall from "../../../assets/img/placeholder_small.jpeg";
 
 const heroImage: Image = {
   large: HeroLarge,

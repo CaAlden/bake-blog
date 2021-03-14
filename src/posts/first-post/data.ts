@@ -1,10 +1,10 @@
 import { Units, PostData, Image, SocialSites } from "../../../types";
-import HeroLarge from "../../../assets/img/2021-2-28-first-post/chocolate-chip-cookie-hero_large.webp";
-import HeroMedium from "../../../assets/img/2021-2-28-first-post/chocolate-chip-cookie-hero_medium.webp";
-import HeroSmall from "../../../assets/img/2021-2-28-first-post/chocolate-chip-cookie-hero_small.webp";
-import LinkImageLarge from "../../../assets/img/2021-2-28-first-post/chocolate-chip-cookie-plate_large.webp";
-import LinkImageMedium from "../../../assets/img/2021-2-28-first-post/chocolate-chip-cookie-plate_medium.webp";
-import LinkImageSmall from "../../../assets/img/2021-2-28-first-post/chocolate-chip-cookie-plate_small.webp";
+import HeroLarge from "../../../assets/img/2021-2-28-first-post/chocolate-chip-cookie-hero_large.jpeg";
+import HeroMedium from "../../../assets/img/2021-2-28-first-post/chocolate-chip-cookie-hero_medium.jpeg";
+import HeroSmall from "../../../assets/img/2021-2-28-first-post/chocolate-chip-cookie-hero_small.jpeg";
+import LinkImageLarge from "../../../assets/img/2021-2-28-first-post/chocolate-chip-cookie-plate_large.jpeg";
+import LinkImageMedium from "../../../assets/img/2021-2-28-first-post/chocolate-chip-cookie-plate_medium.jpeg";
+import LinkImageSmall from "../../../assets/img/2021-2-28-first-post/chocolate-chip-cookie-plate_small.jpeg";
 import { CampbellAuthor } from '../../../assets/authors';
 import Blog from "./post";
 import SugarCookieRecipe from './sugarCookie';
