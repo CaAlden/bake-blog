@@ -25,8 +25,10 @@ const getHeaderClass = (color: string) => css({
 });
 
 const getTitleClass = (breakpoint: Breakpoint) => css({
+  fontSize: '2em',
+  textDecoration: 'none',
   margin: 0,
-  textAlign: breakpoint === Breakpoint.Small ? 'center' : undefined,
+  textAlign: breakpoint === Breakpoint.Small ? 'center' : 'left',
 });
 
 const headerLinkClass = css({
@@ -63,7 +65,7 @@ const Header = () => {
   return (
     <header className={getHeaderClass(matchedColor)}>
       <Link to="/" className={headerLinkClass}>
-        <h1 className={getTitleClass(breakpoint)}>The Bake Lab</h1>
+        <h2 className={getTitleClass(breakpoint)}>The Bake Lab</h2>
       </Link>
       <div style={{ display: 'flex', paddingLeft: '25px' }}>
         <Navigation items={NavigationLinks} />

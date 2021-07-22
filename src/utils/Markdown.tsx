@@ -138,9 +138,29 @@ const makeMarkdownParser = (remarkReactComponents: Record<string, React.Componen
     ) as React.ReactElement;
   };
 
+const imgClassName = css({
+  width: '100%',
+  height: 'auto',
+});
 
+const Image: React.FC<{ src: string; alt?: string }> = (props) => {
+  return (
+    <figure>
+      <img className={imgClassName} {...props} />
+      {props.alt && <figcaption>{props.alt}</figcaption>}
+    </figure>
+  );
+}
+
+const paragraphLike = css({
+  display: 'block',
+  margin: '1em 0',
+  lineHeight: 2,
+});
 const shared: Record<string, React.ComponentType<any>> = {
   a: CustomLink,
+  img: Image,
+  p: ({ children }) => <div className={paragraphLike}>{children}</div>,
   hr: () => <hr style={{ border: '1px solid black', width: '100%'}} />,
   em: ({ children }: { children: React.ReactNode }) => <em style={{ marginRight: '0.2em' }}>{children}</em>,
 };

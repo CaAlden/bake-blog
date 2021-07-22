@@ -24,7 +24,7 @@ const imageClass = css({
   height: '75px',
   width: '75px',
   borderRadius: '75px',
-  paddingRight: '10px',
+  marginRight: '10px',
 });
 const infoAsideClass = css({
   display: 'flex',

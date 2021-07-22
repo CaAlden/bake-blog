@@ -1,4 +1,5 @@
 dist/
+*.DS_STORE
 *.txt
 node_modules/
 .cache/
