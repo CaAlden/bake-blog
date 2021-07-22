@@ -10,10 +10,12 @@ import ListLayout from './layout/ListLayout';
 import PageLayout from './layout/PageLayout';
 import { NamedLink, PostDataHeader, PostData, Recipe as RecipeData } from '../types';
 import FirstPost from './posts/first-post';
+import PieCrustPost from './posts/pie-crust';
 import Homepage from './Homepage';
 import PostList from './PostList';
 import RecipeList from './RecipeList';
 import { data as firstPostData } from './posts/first-post/data';
+import { data as pieCrustData } from './posts/pie-crust/data';
 import { Breakpoint, BreakpointProvider, ConfigProvider, QueryProvider } from './context';
 import { getRecipes } from './utils/posts';
 import connectData, { connectRecipe } from './utils/connectData';
@@ -24,6 +26,7 @@ const RECIPES: Array<[RecipeData, React.ComponentType]> = [
 ];
 
 const POSTS: Array<[PostDataHeader, React.ComponentType]> = [
+  [pieCrustData, PieCrustPost],
   [firstPostData, FirstPost],
 ];
 
@@ -41,7 +44,7 @@ export default function App() {
                 <PostList routes={POSTS} />
               </Route>
               <Route exact path="/">
-                <Homepage posts={[firstPostData]} />
+                <Homepage posts={[pieCrustData, firstPostData]} />
               </Route>
               <Route path="*">
                 TODO: 404
