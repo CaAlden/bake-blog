@@ -83,7 +83,7 @@ const chocolateChip: Recipe = {
   }],
   difficulty: Difficulty.Easy,
   description:
-    "Learn how to make chocolate chip cookies to your preference by experimenting with different ratios of yolks to egg whites!",
+    "Learn how to make chocolate chip cookies with the perfect texture!",
   details: new Map([
     [
       "Chewy",

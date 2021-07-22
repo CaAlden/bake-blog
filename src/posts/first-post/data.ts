@@ -25,7 +25,7 @@ const linkImage: Image = {
 export const data: PostData = {
   title: "First Post",
   author: CampbellAuthor,
-  description: "Read about our discoveries in the world of cookies as we get up to speed in our first ever bake lab post!",
+  description: "Read all about cookies as we get up to speed in our first ever bake lab post!",
   image: heroImage,
   articleLink: {
     url: "/posts/first-post",
