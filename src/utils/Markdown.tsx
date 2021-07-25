@@ -160,7 +160,16 @@ const paragraphLike = css({
 const shared: Record<string, React.ComponentType<any>> = {
   a: CustomLink,
   img: Image,
-  p: ({ children }) => <div className={paragraphLike}>{children}</div>,
+  p: ({ children }) => {
+    const allChildrenAreString = (React.Children.map(children, (child) => {
+      return typeof child === 'string';
+    }) as boolean[]).every(x => x);
+    return allChildrenAreString ? (
+      <p className={paragraphLike}>{children}</p>
+    ) : (
+      <div className={paragraphLike}>{children}</div>
+    );
+  },
   hr: () => <hr style={{ border: '1px solid black', width: '100%'}} />,
   em: ({ children }: { children: React.ReactNode }) => <em style={{ marginRight: '0.2em' }}>{children}</em>,
 };
