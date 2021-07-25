@@ -33,7 +33,7 @@ export const data: PostData = {
     image: linkImage,
   },
   publishDate: new Date("2021-01-23T15:04:34.281Z"),
-  timeEstimate: 8,
+  timeEstimate: 12,
   blog: Blog,
   recipes: new Map([
     ["sugar-cookies", SugarCookieRecipe],
