@@ -130,3 +130,25 @@ export const SelectedIngredientProvider: React.FC<{ ingredients: Ingredient[]}> 
     </SelectedIngredientContext.Provider>
   );
 };
+
+export const useScrollPoint = (point: number, resolution: number = 50) => {
+  const [past, setPast] = React.useState(point < window.scrollY);
+  const [last, setLast] = React.useState(window.scrollY);
+  React.useEffect(() => {
+    const listener = () => {
+      const current = window.scrollY;
+      // The || 0 is sort of use case specific but this just makes sure we
+      // at least don't miss scrolling all the way back to 0.
+      if (Math.abs(last - current) > resolution || current === 0) {
+        setLast(current);
+        setPast(point < current);
+      }
+    };
+    addEventListener('scroll', listener);
+    return () => {
+      removeEventListener('scroll', listener);
+    };
+  }, []);
+
+  return past;
+};
